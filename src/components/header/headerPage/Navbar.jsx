@@ -1,18 +1,20 @@
-import { AppBar, Badge, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
 import Logo from "./Logo";
 import SearchBox from "./SearchBox";
 import {
   AppBarStyle,
   TitleStyle,
   GrowStyle,
-} from "../../styles/header.style/Navbar.style";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useSelector } from "react-redux";
+} from "../../../styles/header.style/Navbar.style";
+
+import { useState } from "react";
+import CardDrawer from "../card/cardBody/cardFeatures/CardDrawer";
+import Card from "../card/cardBody/Card";
 
 const Navbar = () => {
-  const getNumberOfItems = useSelector(state => state.entities.card.cardTotalQuantity)
+  const [showDrawer, setShowDrawer] = useState(false);
 
- return (
+  return (
     <div>
       <AppBar position="relative" color="inherit">
         <AppBarStyle>
@@ -24,14 +26,11 @@ const Navbar = () => {
             </Typography>
             <SearchBox />
             <GrowStyle />
-            <IconButton aria-label="show cart item" color="inherit">
-              <Badge badgeContent={getNumberOfItems} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+            <Card cardState={{ showDrawer: [showDrawer, setShowDrawer] }} />
           </Toolbar>
         </AppBarStyle>
       </AppBar>
+      <CardDrawer cardState={{ showDrawer: [showDrawer, setShowDrawer] }} />
     </div>
   );
 };
