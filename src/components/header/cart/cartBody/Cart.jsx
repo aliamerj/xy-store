@@ -1,15 +1,17 @@
 import { useSelector } from "react-redux";
-import { Badge, IconButton} from "@mui/material";
+import { Badge, IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useState } from "react";
 
-const Card = ({cardState}) => {
-    const {showDrawer: [showDrawer, setShowDrawer]} = {showDrawer: useState(0),...(cardState || {})};
+const Cart = ({ cartState }) => {
+  const {
+    showDrawer: [showDrawer, setShowDrawer],
+  } = { showDrawer: useState(0), ...(cartState || {}) };
 
   const getNumberOfItems = useSelector(
-    (state) => state.entities.card.cardTotalQuantity
+    (state) => state.entities.cart.cartTotalQuantity
   );
-  
+
   return (
     <IconButton
       aria-label="show cart item"
@@ -23,4 +25,4 @@ const Card = ({cardState}) => {
   );
 };
 
-export default Card;
+export default Cart;

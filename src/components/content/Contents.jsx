@@ -3,7 +3,7 @@ import { commerce } from "../../lib/Commerce";
 import Products from "./products/Products";
 const Contents = () => {
   const [products, setProducts] = useState([]);
-  const [card, setCard] = useState({});
+  const [cart, setCart] = useState({});
 
   const fetchProducts = async () => {
     const { data } = await commerce.products.list();
@@ -11,7 +11,7 @@ const Contents = () => {
   };
 
   const fetchCart = async () => {
-    setCard(await commerce.cart.retrieve());
+    setCart(await commerce.cart.retrieve());
   };
 
   useEffect(() => {

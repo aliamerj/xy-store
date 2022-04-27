@@ -1,14 +1,14 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { REMOVE_FROM_CARD } from "../../../../store/card.store/cardSlice";
+import { REMOVE_ALL_FROM_CART } from "../../../../store/cart.store/cartSlice";
 
-const CardRemoveItems = ({ product }) => {
+const CartRemoveItems = ({ product }) => {
   const dispatch = useDispatch();
   return (
     <>
       <IconButton
-        onClick={() => dispatch(REMOVE_FROM_CARD(product))}
+        onClick={() => dispatch(REMOVE_ALL_FROM_CART(product))}
         aria-label="remove from cart"
       >
         <CloseIcon />
@@ -16,4 +16,4 @@ const CardRemoveItems = ({ product }) => {
     </>
   );
 };
-export default CardRemoveItems;
+export default CartRemoveItems;

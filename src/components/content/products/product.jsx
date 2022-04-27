@@ -8,10 +8,14 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { ADD_TO_CARD } from "../../store/card.store/cardSlice";
+import { ADD_TO_CART } from "../../store/cart.store/cartSlice";
 
 const Product = ({ product }) => {
   const dispatch = useDispatch();
+
+  const handleAddProduct = (product) => {
+    dispatch(ADD_TO_CART(product));
+  };
 
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -38,7 +42,7 @@ const Product = ({ product }) => {
       <CardActions disableSpacing>
         <IconButton
           aria-label="add to cart"
-          onClick={() => dispatch(ADD_TO_CARD(product))}
+          onClick={() => handleAddProduct(product)}
         >
           <AddShoppingCart />
         </IconButton>

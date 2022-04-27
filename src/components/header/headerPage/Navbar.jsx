@@ -8,8 +8,8 @@ import {
 } from "../../../styles/header.style/Navbar.style";
 
 import { useState } from "react";
-import CardDrawer from "../card/cardBody/cardFeatures/CardDrawer";
-import Card from "../card/cardBody/Card";
+import CartDrawer from "../cart/cartBody/cartFeatures/CartDrawer";
+import Cart from "../cart/cartBody/Cart";
 
 const Navbar = () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -26,11 +26,11 @@ const Navbar = () => {
             </Typography>
             <SearchBox />
             <GrowStyle />
-            <Card cardState={{ showDrawer: [showDrawer, setShowDrawer] }} />
+            <Cart cartState={{ showDrawer: [showDrawer, setShowDrawer] }} />
           </Toolbar>
         </AppBarStyle>
       </AppBar>
-      <CardDrawer cardState={{ showDrawer: [showDrawer, setShowDrawer] }} />
+      <CartDrawer cartState={{ showDrawer: [showDrawer, setShowDrawer] }} />
     </div>
   );
 };

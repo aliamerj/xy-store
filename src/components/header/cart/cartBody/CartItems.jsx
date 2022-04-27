@@ -11,16 +11,18 @@ import {
 } from "@mui/material";
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
-import CardRemoveItems from "./cardFeatures/CardRemoveItems";
+import CartRemoveItems from "./cartFeatures/CartRemoveItems";
+import QuantityControler from "./cartFeatures/QuantityControler";
 
-const CardItems = () => {
-  const getCardItems = useSelector((state) => state.entities.card.cardItems);
+const CartItems = () => {
+  const getCartItems = useSelector((state) => state.entities.cart.cartItems);
+
   return (
     <List>
-      {getCardItems.map((item) => (
+      {getCartItems.map((item) => (
         <Fragment key={item.id}>
           <CardActions disableSpacing>
-            <CardRemoveItems product={item} />
+            <CartRemoveItems product={item} />
           </CardActions>
           <ListItem disablePadding>
             <Card
@@ -58,14 +60,15 @@ const CardItems = () => {
                   color="text.secondary"
                   gutterBottom
                 >
-                  {item.price.formatted_with_symbol}x{item.cardQuantity}
+                  {item.price.formatted_with_symbol}x{item.cartQuantity}
                 </Typography>
                 <Typography variant="body1" color="Highlight" gutterBottom>
-                  ${item.price.formatted * item.cardQuantity}
+                  ${item.price.formatted * item.cartQuantity}
                 </Typography>
               </CardContent>
             </Card>
           </ListItem>
+          <QuantityControler item={item} />
 
           <Divider
             variant="fullWidth"
@@ -77,4 +80,4 @@ const CardItems = () => {
     </List>
   );
 };
-export default CardItems;
+export default CartItems;

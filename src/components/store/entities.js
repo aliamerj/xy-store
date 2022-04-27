@@ -1,4 +1,4 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import cardReducer from "./card.store/cardSlice";
+import cartReducer from "./cart.store/cartSlice";
 
-export default combineReducers({card : cardReducer})
+export default combineReducers({ cart: cartReducer });

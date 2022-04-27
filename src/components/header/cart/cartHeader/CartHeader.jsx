@@ -2,8 +2,8 @@ import { Divider, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-const CardHeader = () => {
-  const getCardItems = useSelector((state) => state.entities.card.cardItems);
+const CartHeader = () => {
+  const getCartItems = useSelector((state) => state.entities.cart.cartItems);
   return (
     <>
       <Box sx={{ width: 340, px: 2, margin: 2, marginTop: 3 }} component="div">
@@ -16,7 +16,7 @@ const CardHeader = () => {
             sx={{ display: "inline-block" }}
             px={2}
           >
-            {getCardItems.length} item
+            {getCartItems.length} item
           </Typography>
         </Typography>
       </Box>
@@ -26,4 +26,4 @@ const CardHeader = () => {
   );
 };
 
-export default CardHeader;
+export default CartHeader;
