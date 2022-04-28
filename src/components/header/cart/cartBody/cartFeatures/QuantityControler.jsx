@@ -10,7 +10,7 @@ import {
   REMOVE_FROM_CART,
 } from "../../../../store/cart.store/cartSlice";
 
-const QuantityControler = ({ item }) => {
+const QuantityControler = ({ item, display, marginLeft, marginTop }) => {
   const dispatch = useDispatch();
   let displayButton = false;
 
@@ -24,14 +24,19 @@ const QuantityControler = ({ item }) => {
     displayButton = true;
   }
   return (
-    <Stack direction="row" marginLeft={15}>
+    <Stack direction={display} marginLeft={15}>
       <IconButton
         aria-label="increase Quantity"
         onClick={() => handleIncreaseQuantity(item)}
       >
         <AddCircleOutlineIcon color="primary" />
       </IconButton>
-      <Typography variant="button" component="h6" marginTop={1}>
+      <Typography
+        variant="button"
+        component="h6"
+        marginTop={marginTop}
+        marginLeft={marginLeft}
+      >
         {item.cartQuantity}
       </Typography>
       <IconButton

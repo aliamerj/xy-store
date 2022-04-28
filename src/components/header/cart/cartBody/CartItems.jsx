@@ -48,8 +48,7 @@ const CartItems = () => {
               </CardActionArea>
               <CardContent>
                 <Typography
-                  component="a"
-                  href="#"
+                  component="h6"
                   variant="h6"
                   sx={{ textDecoration: "none", color: "inherit" }}
                 >
@@ -68,7 +67,7 @@ const CartItems = () => {
               </CardContent>
             </Card>
           </ListItem>
-          <QuantityControler item={item} />
+          <QuantityControler item={item} display={"row"} marginTop={1} />
 
           <Divider
             variant="fullWidth"
