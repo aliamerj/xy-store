@@ -12,7 +12,9 @@ const CartFooter = () => {
   return (
     <>
       <Stack spacing={2} direction="column" marginX={4}>
-        <Button variant="contained">Checkout Now (${getTotalAmount})</Button>
+        <Button onClick={() => nav("/checkout")} variant="contained">
+          Checkout Now (${getTotalAmount})
+        </Button>
         <Button onClick={() => nav("/cart")} variant="outlined">
           view cart
         </Button>
