@@ -1,20 +1,37 @@
 const _ = require("lodash");
 const bycrypt = require("bcrypt");
-const {User, validateUser} = require("../../modules/user.module");
+const { validateRegister, validateLogin } = require("../../modules/validaters");
+const User = require("../../modules/user.module");
+const jwt = require("jsonwebtoken");
 
-const register = async (req, res) => {
-  const { error } = validateUser(req.body)
+const register = (req, res) => {
+  const { error } = validateRegister(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   let userInfo = _.pick(req.body, ["username", "email", "password"]);
   let newUser = new User(userInfo);
-  const salt = await bycrypt.genSalt(10);
-  newUser.password = await bycrypt.hash(newUser.password, salt);
-  try {
-    await newUser.save();
-    res.status(201).send('success');
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
+
+  bycrypt
+    .genSalt(10)
+    .then((salt) => bycrypt.hash(newUser.password, salt))
+    .then((password) => (newUser.password = password))
+    .then(() => newUser.save())
+    .then(() => newUser.generateAuthToken())
+    .then((token) => res.header("x-auth-token", token))
+    .then(() => res.status(201).send("success"))
+    .catch((error) => res.status(400).send(error.message));
 };
 
-module.exports = register;
+const login = (req, res) => {
+  const { error } = validateLogin(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+  User.findOne({ email: req.body.email })
+    .then((user) => bycrypt.compare(req.body.password, user.password))
+    .then((validPassword) => {
+      if (validPassword) return res.status(200).send("login successed");
+      throw new Error("invald login");
+    })
+    .catch(() => res.status(401).send("Email or password was incorrect."));
+};
+
+exports.register = register;
+exports.login = login;

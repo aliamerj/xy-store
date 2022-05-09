@@ -1,7 +1,6 @@
-const Joi = require("joi");
 const mongoose = require("mongoose");
 const { isEmail, isStrongPassword } = require("validator/validator");
-
+const jwt = require("jsonwebtoken");
 const UserSchema = new mongoose.Schema(
   {
     username: {
@@ -34,15 +33,14 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-const validateUser = (user) => {
-  const schema = Joi.object({
-    username: Joi.string().min(5).max(20).required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().min(5).max(255).required(),
-  });
-  return schema.validate(user);
+UserSchema.methods.generateAuthToken = () =>
+  jwt.sign(
+    { _id: this._id, isAdmin: this.isAdmin },
+    process.env.JWT_PRIVATE_KEY,
+    { expiresIn: "1d" }
+  );
+module.exports = mongoose.model("User", UserSchema);
+module.exports.models = {
+  connection: "mongodb",
+  migrate: "safe",
 };
-
-exports.validateUser = validateUser;
-exports.User = mongoose.model("User", UserSchema);

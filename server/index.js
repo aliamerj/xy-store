@@ -9,7 +9,7 @@ app.use(express.json());
 dotenv.config();
 
 app.use("/api/user", userRoute);
-app.use("/api/register", authRoute);
+app.use("/api/", authRoute);
 
 mongoose
   .connect(process.env.MONGO_URL)
