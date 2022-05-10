@@ -16,7 +16,21 @@ const validateRegister = (user) => {
   return schema.validate(user);
 };
 
+const validateCreateProduct = (product) => {
+  const schema = Joi.object({
+    title: Joi.string().max(40).min(5).required(),
+    description: Joi.string().max(100).min(20).required(),
+    image: Joi.string().required(),
+    categories: Joi.array().required(),
+    size: Joi.string(),
+    color: Joi.string(),
+    price: Joi.number().required(),
+  });
+  return schema.validate(product);
+};
+
 module.exports = {
   validateLogin,
   validateRegister,
+  validateCreateProduct,
 };

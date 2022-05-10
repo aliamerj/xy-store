@@ -2,8 +2,10 @@ const { validateRegister } = require("../../modules/validaters");
 const User = require("../../modules/user.module");
 const bycrypt = require("bcrypt");
 
-const getUsers = (req, res) => {
-  res.send("user here !!");
+const getUser = (req, res) => {
+  User.findById(req.params.id).then(({ username, email }) =>
+    res.status(200).json({ username: username, email: email })
+  );
 };
 
 const changeInfo = (req, res) => {
@@ -24,4 +26,4 @@ const changeInfo = (req, res) => {
     .catch((error) => res.status(400).send(error.message));
 };
 
-module.exports = { getUsers, changeInfo };
+module.exports = { getUser, changeInfo };
