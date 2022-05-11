@@ -1,3 +1,0 @@
-# xy-store
-
-store 

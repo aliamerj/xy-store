@@ -1,8 +1,5 @@
 {
   "name": "xy-store",
-  "jest": {
-    "verbose": true
-  },
   "version": "1.0.0",
   "description": "api for the xy-store",
   "main": "index.js",
@@ -13,6 +10,7 @@
   "author": "ali amer",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.17.10",
     "bcrypt": "^5.0.1",
     "config": "^3.3.7",
     "dotenv": "^16.0.0",
@@ -27,6 +25,7 @@
   "devDependencies": {
     "@types/validator": "^13.7.2",
     "jest": "^28.1.0",
-    "nodemon": "^2.0.16"
+    "jest-cli": "^28.1.0",
+    "@types/jest": "^27.4.1"
   }
 }
