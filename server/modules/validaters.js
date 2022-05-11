@@ -28,9 +28,28 @@ const validateCreateProduct = (product) => {
   });
   return schema.validate(product);
 };
+const validateCreateCart = (cart) => {
+  const schema = Joi.object({
+    userId: Joi.string().required(),
+    products: Joi.array(),
+  });
+  return schema.validate(cart);
+};
+const validateCreateOrder = (order) => {
+  const schema = Joi.object({
+    userId: Joi.string().required(),
+    products: Joi.array(),
+    amount: Joi.number().required(),
+    address: Joi.object().required(),
+    status: Joi.string(),
+  });
+  return schema.validate(order);
+};
 
 module.exports = {
   validateLogin,
   validateRegister,
   validateCreateProduct,
+  validateCreateCart,
+  validateCreateOrder,
 };
