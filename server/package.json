@@ -4,7 +4,7 @@
   "description": "api for the xy-store",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --watchAll ",
     "start": "nodemon index.js"
   },
   "author": "ali amer",
@@ -20,12 +20,13 @@
     "lodash": "^4.17.21",
     "mongoose": "^6.3.2",
     "stripe": "^9.0.0",
+    "supertest": "^6.2.3",
     "validator": "^13.7.0"
   },
   "devDependencies": {
+    "@types/jest": "^27.4.1",
     "@types/validator": "^13.7.2",
     "jest": "^28.1.0",
-    "jest-cli": "^28.1.0",
-    "@types/jest": "^27.4.1"
+    "jest-cli": "^28.1.0"
   }
 }

@@ -4,7 +4,7 @@ const Product = require("../../modules/product.module");
 
 const createProduct = async (req, res) => {
   const { error } = validateCreateProduct(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(422).send(error.details[0].message);
   let productInfo = _.pick(req.body, [
     "title",
     "description",
@@ -28,7 +28,7 @@ const createProduct = async (req, res) => {
       price: productSaved.price,
     });
   } catch (error) {
-    res.status(500).json(error);
+    res.status(422).json(error.message);
   }
 };
 
@@ -45,24 +45,14 @@ const updateProduct = (req, res) => {
     "price",
   ]);
   Product.findByIdAndUpdate(req.params.id, productInfo)
-    .then((productUpdated) =>
-      res.status(200).json({
-        title: productUpdated.title,
-        description: productUpdated.description,
-        image: productUpdated.image,
-        categories: productUpdated.categories,
-        size: productUpdated.size,
-        color: productUpdated.color,
-        price: productUpdated.price,
-      })
-    )
-    .catch((error) => res.status(500).json(error.message));
+    .then((productUpdated) => res.status(200).json(productUpdated))
+    .catch((error) => res.status(404).json(error.message));
 };
 
 const deleteProduct = (req, res) => {
   Product.findByIdAndDelete(req.params.id)
     .then(res.status(204).json("product has been deleted..."))
-    .catch((error) => res.status(500).json(error.message));
+    .catch((error) => res.status(204));
 };
 const getAllProduct = (req, res) => {
   Product.find({})
