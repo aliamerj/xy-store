@@ -104,6 +104,10 @@ describe("PUT / updateProduct", () => {
         price: 1,
       })
       .expect(200);
+
+    const productTitle = await Product.findById(product._id);
+
+    expect(productTitle.title).toBe("changed changed changed");
   });
   it("should return 404 when id is invalid", async () => {
     const res = await request(server)
@@ -124,11 +128,14 @@ describe("delete/ deleteProduct ", () => {
   it("should delete product with given valid id ", async () => {
     const product = new Product(productTest);
     await product.save();
-    const res = await request(server)
+    await request(server)
       .delete("/api/product/" + product._id)
-      .expect(204);
+      .expect(200)
+      .then((e) => {
+        expect(e.body).toBe("product has been deleted...");
+      });
   });
   it("should return 404 if id was invalid ", async () => {
-    const res = await request(server).delete("/api/product/10002").expect(204);
+    const res = await request(server).delete("/api/product/1").expect(404);
   });
 });

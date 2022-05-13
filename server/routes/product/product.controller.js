@@ -51,8 +51,8 @@ const updateProduct = (req, res) => {
 
 const deleteProduct = (req, res) => {
   Product.findByIdAndDelete(req.params.id)
-    .then(res.status(204).json("product has been deleted..."))
-    .catch((error) => res.status(204));
+    .then(() => res.status(200).json("product has been deleted..."))
+    .catch((error) => res.status(404).json(error.message));
 };
 const getAllProduct = (req, res) => {
   Product.find({})
