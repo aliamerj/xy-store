@@ -4,7 +4,7 @@
   "description": "api for the xy-store",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll ",
+    "test": "jest --watchAll --verbose --detectOpenHandles --coverage",
     "start": "nodemon index.js"
   },
   "author": "ali amer",

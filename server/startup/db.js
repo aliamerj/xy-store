@@ -1,9 +1,7 @@
 const { connect } = require("mongoose");
-const configDb = require("config");
 
-module.exports = function () {
-  const DB = configDb.get("db");
+module.exports = function (DB) {
   connect(DB)
-    .then(() => console.log(`connected to ${DB}.. :} `))
+    .then((DB) => console.log(`connected to ${DB}.. :} `))
     .catch((err) => console.error("could not connect to mongoDB...", err));
 };

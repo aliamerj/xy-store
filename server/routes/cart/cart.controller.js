@@ -4,9 +4,9 @@ const Cart = require("../../modules/cart.module");
 
 const createCart = async (req, res) => {
   const { error } = validateCreateCart(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(422).send(error.details[0].message);
   let cartInfo = _.pick(req.body, ["userId", "products"]);
-  const newcart = new cart(cartInfo);
+  const newcart = new Cart(cartInfo);
 
   try {
     const cartSaved = await newcart.save();
@@ -22,6 +22,7 @@ const createCart = async (req, res) => {
 const updateCart = (req, res) => {
   const { error } = validateCreateCart(req.body);
   if (error) return res.status(400).send(error.details[0].message);
+
   let cartInfo = _.pick(req.body, ["userId", "products"]);
   Cart.findByIdAndUpdate(req.params.id, cartInfo)
     .then((cartUpdated) =>
@@ -30,13 +31,13 @@ const updateCart = (req, res) => {
         Products: cartUpdated.Products,
       })
     )
-    .catch((error) => res.status(500).json(error.message));
+    .catch((error) => res.status(404).json(error.message));
 };
 
 const deleteCart = (req, res) => {
   Cart.findByIdAndDelete(req.params.id)
-    .then(res.status(204).json("cart has been deleted..."))
-    .catch((error) => res.status(500).json(error.message));
+    .then(() => res.status(200).json("cart has been deleted..."))
+    .catch((error) => res.status(404).json(error.message));
 };
 const getAllCart = (req, res) => {
   Cart.find({})
@@ -49,7 +50,6 @@ const getUserCart = (req, res) => {
     .then((carts) => res.status(200).json(carts))
     .catch((error) => res.status(404).json(error.message));
 };
-
 module.exports = {
   createCart,
   updateCart,

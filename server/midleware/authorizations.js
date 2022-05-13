@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-// not working
-const verifyAuthorization = (req, res, next) => {
+const accessToHisOwnData = (req, res, next) => {
   const token = req.header("x-auth-token");
   const { _id, isAdmin } = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 
@@ -13,5 +12,5 @@ const verifyAuthorization = (req, res, next) => {
 };
 
 module.exports = {
-  verifyAuthorization,
+  accessToHisOwnData,
 };

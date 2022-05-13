@@ -4,7 +4,7 @@ const Order = require("../../modules/Order.module");
 
 const createOrder = async (req, res) => {
   const { error } = validateCreateOrder(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(422).send(error.details[0].message);
   let orderInfo = _.pick(req.body, [
     "userId",
     "products",
@@ -42,13 +42,13 @@ const updateOrder = (req, res) => {
         status: orderUpdated.status,
       })
     )
-    .catch((error) => res.status(500).json(error.message));
+    .catch((error) => res.status(404).json(error.message));
 };
 
 const deleteOrder = (req, res) => {
   Order.findByIdAndDelete(req.params.id)
-    .then(res.status(204).json("Order has been deleted..."))
-    .catch((error) => res.status(500).json(error.message));
+    .then(() => res.status(200).json("Order has been deleted..."))
+    .catch((error) => res.status(404).json(error.message));
 };
 const getAllOrder = (req, res) => {
   Order.find({})

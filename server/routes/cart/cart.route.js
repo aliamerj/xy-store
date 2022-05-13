@@ -8,10 +8,10 @@ const {
 } = require("./cart.controller");
 
 const route = express.Router();
-route.post("/", createCart);
-route.put("/:id", updateCart);
-route.delete("/:id", deleteCart);
-route.get("/", getAllCart);
-route.get("/find/:id", getUserCart);
+route.post("/", createCart); //tested
+route.put("/:id", updateCart); //tested
+route.delete("/:id", deleteCart); // tested
+route.get("/", getAllCart); // tested
+route.get("/find/:userId", getUserCart); //tested
 
 module.exports = route;

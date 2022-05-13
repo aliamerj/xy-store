@@ -1,12 +1,11 @@
-const { json } = require("express");
 const request = require("supertest");
-const Product = require("../../modules/product.module");
+const Product = require("../modules/product.module");
 let server;
 let productTest;
-jest.setTimeout(9000);
+jest.setTimeout(10000);
 
 beforeEach(() => {
-  server = require("../../index");
+  server = require("../index");
   productTest = {
     title: "test product test",
     description: "this is just test test product",
@@ -22,7 +21,7 @@ afterEach(async () => {
   server.close();
 });
 
-describe.skip("/api/product", () => {
+describe("/api/product", () => {
   describe("GET/ getAllProduct /", () => {
     it("should return all products", async () => {
       await Product.collection.insertMany([

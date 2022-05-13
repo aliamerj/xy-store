@@ -3,9 +3,11 @@ const User = require("../../modules/user.module");
 const bycrypt = require("bcrypt");
 
 const getUser = (req, res) => {
-  User.findById(req.params.id).then(({ username, email }) =>
-    res.status(200).json({ username: username, email: email })
-  );
+  User.findById(req.params.id)
+    .then(({ username, email }) =>
+      res.status(200).json({ username: username, email: email })
+    )
+    .catch((err) => res.status(500).json(err.message));
 };
 
 const changeInfo = (req, res) => {
