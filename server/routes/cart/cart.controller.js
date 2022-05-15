@@ -47,8 +47,13 @@ const getAllCart = (req, res) => {
 };
 const getUserCart = (req, res) => {
   Cart.findOne({ userId: req.params.userId })
-    .then((carts) => res.status(200).json(carts))
-    .catch((error) => res.status(404).json(error.message));
+    .then((cart) => {
+      if (cart) return res.status(200).json(cart);
+      else {
+        throw error();
+      }
+    })
+    .catch((e) => res.status(404).json(e.message));
 };
 module.exports = {
   createCart,

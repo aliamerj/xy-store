@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const request = require("supertest");
 const Order = require("../modules/order.module");
 let server;
@@ -20,7 +21,7 @@ afterEach(async () => {
   server.close();
 });
 
-describe("/api/order", () => {
+describe.only("/api/order", () => {
   describe("GET/ getAllOrder /", () => {
     it("should return all orders", async () => {
       await Order.collection.insertMany([
@@ -123,6 +124,18 @@ describe("/api/order", () => {
         })
         .expect(404);
     });
+    it("should return 404 if info was invalid or missing", async () => {
+      const order = new Order(orderTest);
+      await order.save();
+      const res = await request(server)
+        .put("/api/order/" + order._id)
+        .send({
+          amount: 1,
+          address: { test1: "test1" },
+          status: "1 test",
+        })
+        .expect(400);
+    });
   });
   describe("DELETE/ deleteOrder ", () => {
     it("should delete order with given valid id ", async () => {
@@ -151,8 +164,8 @@ describe("/api/order", () => {
       expect(res.body).toHaveProperty("status");
       expect(res.body).toHaveProperty("userId");
     });
-    it("should throw an error if id was invlid (404) ", async () => {
-      await request(server).get("/api/order/1").expect(404);
+    it("should throw an error if userId was invlid (404) ", async () => {
+      await request(server).get("/api/order/find/1").expect(404);
     });
   });
 });

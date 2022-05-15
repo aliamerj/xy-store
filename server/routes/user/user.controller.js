@@ -7,7 +7,7 @@ const getUser = (req, res) => {
     .then(({ username, email }) =>
       res.status(200).json({ username: username, email: email })
     )
-    .catch((err) => res.status(500).json(err.message));
+    .catch((err) => res.status(404).json(err.message));
 };
 
 const changeInfo = (req, res) => {
@@ -23,9 +23,9 @@ const changeInfo = (req, res) => {
         password: passwordHashed,
       })
         .then((user) => res.status(200).json(user))
-        .catch((err) => res.status(500).json(err.message))
+        .catch((err) => res.status(404).json(err.message))
     )
-    .catch((error) => res.status(400).send(error.message));
+    .catch((error) => res.status(500).send(error.message));
 };
 
 module.exports = { getUser, changeInfo };

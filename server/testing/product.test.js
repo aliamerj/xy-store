@@ -81,12 +81,13 @@ describe("/api/product", () => {
     it("should add new product with 201 created", async () => {
       await request(server).post("/api/product").send(productTest).expect(201);
     });
-    it("should throw an error with 422 when there is a data missing", async () => {
+    it("should throw an error with 400 when there is a data missing", async () => {
       await request(server)
         .post("/api/product")
         .send({ title: "test" })
-        .expect(422);
+        .expect(400);
     });
+    it("should throw an error with 500 if the server couldn't save data", () => {});
   });
   describe("PUT/ updateProduct", () => {
     it("should update info with given valid id", async () => {
@@ -122,6 +123,20 @@ describe("/api/product", () => {
           price: 1,
         })
         .expect(404);
+    });
+    it("should return 400 if new user info was invalid", async () => {
+      const product = new Product(productTest);
+      await product.save();
+      await request(server)
+        .put("/api/product/" + product._id)
+        .send({
+          title: "changed changed changed",
+          description: 1,
+          size: "1 test",
+          color: "color test",
+          price: 1,
+        })
+        .expect(400);
     });
   });
   describe("DELETE/ deleteProduct ", () => {

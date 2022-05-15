@@ -58,8 +58,13 @@ const getAllOrder = (req, res) => {
 };
 const getUserOrder = (req, res) => {
   Order.findOne({ userId: req.params.userId })
-    .then((orders) => res.status(200).json(orders))
-    .catch((error) => res.status(404).json(error.message));
+  .then((order) => {
+    if (order) return res.status(200).json(order);
+    else {
+      throw error();
+    }
+  })
+  .catch((e) => res.status(404).json(e.message));
 };
 
 module.exports = {

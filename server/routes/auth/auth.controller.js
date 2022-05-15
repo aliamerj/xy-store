@@ -18,19 +18,21 @@ const register = (req, res) => {
     .then(() => newUser.generateAuthToken())
     .then((token) => res.header("x-auth-token", token))
     .then(() => res.status(201).send("success"))
-    .catch((error) => res.status(400).send(error.message));
+    .catch((error) => res.status(500).send(error.message));
 };
 
 const login = (req, res) => {
   const { error } = validateLogin(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).json(error.details[0].message);
   User.findOne({ email: req.body.email })
     .then((user) => bycrypt.compare(req.body.password, user.password))
     .then((validPassword) => {
-      if (validPassword) return res.status(200).send("login successed");
-      throw new Error("invald login");
+      if (validPassword) return res.status(200).json("login successed");
+      else {
+        throw error();
+      }
     })
-    .catch(() => res.status(401).send("Email or password was incorrect."));
+    .catch(() => res.status(400).json("Email or password was incorrect."));
 };
 
 exports.register = register;

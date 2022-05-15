@@ -4,7 +4,7 @@ const Product = require("../../modules/product.module");
 
 const createProduct = async (req, res) => {
   const { error } = validateCreateProduct(req.body);
-  if (error) return res.status(422).send(error.details[0].message);
+  if (error) return res.status(400).send(error.details[0].message);
   let productInfo = _.pick(req.body, [
     "title",
     "description",
@@ -28,7 +28,7 @@ const createProduct = async (req, res) => {
       price: productSaved.price,
     });
   } catch (error) {
-    res.status(422).json(error.message);
+    res.status(500).json(error.message);
   }
 };
 

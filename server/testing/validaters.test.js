@@ -6,7 +6,7 @@ const {
   validateLogin,
 } = require("../modules/validaters");
 
-describe.skip("validaters test", () => {
+describe("validaters test", () => {
   describe("validate Create Product ", () => {
     const productTestCorrectly = {
       title: "test product test",
