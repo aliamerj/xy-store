@@ -3,8 +3,6 @@ const _ = require("lodash");
 const Product = require("../../modules/product.module");
 
 const createProduct = async (req, res) => {
-  const { error } = validateCreateProduct(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
   let productInfo = _.pick(req.body, [
     "title",
     "description",
@@ -33,8 +31,6 @@ const createProduct = async (req, res) => {
 };
 
 const updateProduct = (req, res) => {
-  const { error } = validateCreateProduct(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
   let productInfo = _.pick(req.body, [
     "title",
     "description",
@@ -57,8 +53,13 @@ const deleteProduct = (req, res) => {
 const getAllProduct = (req, res) => {
   Product.find({})
     .sort({ date: -1 })
-    .then((products) => res.status(200).json(products))
-    .catch((error) => res.status(404).json(error.message));
+    .then((products) => {
+      if (products.length !== 0) return res.status(200).json(products);
+      else {
+        throw error();
+      }
+    })
+    .catch(() => res.status(404).json("there is no product "));
 };
 const getProdct = (req, res) => {
   Product.findById(req.params.id)

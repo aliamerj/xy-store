@@ -1,6 +1,7 @@
 const express = require("express");
 const configDb = require("config");
 const app = express();
+
 require("dotenv").config();
 const DB = configDb.get("db");
 require("./startup/db")(DB);

@@ -21,7 +21,7 @@ afterEach(async () => {
   server.close();
 });
 
-describe.only("/api/order", () => {
+describe("/api/order", () => {
   describe("GET/ getAllOrder /", () => {
     it("should return all orders", async () => {
       await Order.collection.insertMany([
@@ -51,12 +51,13 @@ describe.only("/api/order", () => {
       ).toBeTruthy();
     });
 
-    it("should throw an error if there is problem", () => {
-      request(server)
+    it("should retutn 404 if there is problem loading order or there is no order", async () => {
+      const res = await request(server)
         .get("/api/order")
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(404);
+      expect(res.body).toBe("there is no order");
     });
   });
   // TODO:
@@ -77,11 +78,11 @@ describe.only("/api/order", () => {
     it("should add new order with 201 created", async () => {
       await request(server).post("/api/order").send(orderTest).expect(201);
     });
-    it("should throw an error with 422 when there is a data missing or invalid", async () => {
+    it("should throw an error with 400 when there is a data missing or invalid", async () => {
       await request(server)
         .post("/api/order")
         .send({ title: "test" })
-        .expect(422);
+        .expect(400);
 
       await request(server)
         .post("/api/order")
@@ -90,7 +91,7 @@ describe.only("/api/order", () => {
           amount: 1,
           address: { test1: "test1" },
         })
-        .expect(422);
+        .expect(400);
     });
   });
   describe("PUT/ updateOrder", () => {

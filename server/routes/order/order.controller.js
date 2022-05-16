@@ -3,8 +3,6 @@ const _ = require("lodash");
 const Order = require("../../modules/Order.module");
 
 const createOrder = async (req, res) => {
-  const { error } = validateCreateOrder(req.body);
-  if (error) return res.status(422).send(error.details[0].message);
   let orderInfo = _.pick(req.body, [
     "userId",
     "products",
@@ -29,8 +27,6 @@ const createOrder = async (req, res) => {
 };
 
 const updateOrder = (req, res) => {
-  const { error } = validateCreateOrder(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
   let orderInfo = _.pick(req.body, ["userId", "products"]);
   Order.findByIdAndUpdate(req.params.id, orderInfo)
     .then((orderUpdated) =>
@@ -53,18 +49,24 @@ const deleteOrder = (req, res) => {
 const getAllOrder = (req, res) => {
   Order.find({})
     .sort({ date: -1 })
-    .then((orders) => res.status(200).json(orders))
-    .catch((error) => res.status(404).json(error.message));
+    .then((orders) => {
+      if (orders.length !== 0) return res.status(200).json(orders);
+      else {
+        throw error();
+      }
+    })
+
+    .catch(() => res.status(404).json("there is no order"));
 };
 const getUserOrder = (req, res) => {
   Order.findOne({ userId: req.params.userId })
-  .then((order) => {
-    if (order) return res.status(200).json(order);
-    else {
-      throw error();
-    }
-  })
-  .catch((e) => res.status(404).json(e.message));
+    .then((order) => {
+      if (order) return res.status(200).json(order);
+      else {
+        throw error();
+      }
+    })
+    .catch(() => res.status(404).json("there is no order"));
 };
 
 module.exports = {

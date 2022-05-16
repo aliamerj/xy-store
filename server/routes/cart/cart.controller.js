@@ -3,8 +3,6 @@ const _ = require("lodash");
 const Cart = require("../../modules/cart.module");
 
 const createCart = async (req, res) => {
-  const { error } = validateCreateCart(req.body);
-  if (error) return res.status(422).send(error.details[0].message);
   let cartInfo = _.pick(req.body, ["userId", "products"]);
   const newcart = new Cart(cartInfo);
 
@@ -20,9 +18,6 @@ const createCart = async (req, res) => {
 };
 
 const updateCart = (req, res) => {
-  const { error } = validateCreateCart(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
-
   let cartInfo = _.pick(req.body, ["userId", "products"]);
   Cart.findByIdAndUpdate(req.params.id, cartInfo)
     .then((cartUpdated) =>
@@ -42,8 +37,13 @@ const deleteCart = (req, res) => {
 const getAllCart = (req, res) => {
   Cart.find({})
     .sort({ date: -1 })
-    .then((carts) => res.status(200).json(carts))
-    .catch((error) => res.status(404).json(error.message));
+    .then((carts) => {
+      if (carts.length !== 0) return res.status(200).json(carts);
+      else {
+        throw error();
+      }
+    })
+    .catch(() => res.status(404).json("the cart is empty"));
 };
 const getUserCart = (req, res) => {
   Cart.findOne({ userId: req.params.userId })
@@ -53,7 +53,7 @@ const getUserCart = (req, res) => {
         throw error();
       }
     })
-    .catch((e) => res.status(404).json(e.message));
+    .catch(() => res.status(404).json("cart is empty"));
 };
 module.exports = {
   createCart,

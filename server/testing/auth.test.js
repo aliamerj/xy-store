@@ -35,7 +35,6 @@ describe("/api/register", () => {
       .expect(400);
   });
   it.skip("should return 500 if the server failed hashing password", async () => {
-    // joi will stop you
     newRegistering.password = null;
     await request(server)
       .post("/api/register")

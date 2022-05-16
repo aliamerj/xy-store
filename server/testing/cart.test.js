@@ -38,20 +38,21 @@ describe("/api/cart", () => {
       ).toBeTruthy();
     });
 
-    it.skip("should throw an error if server unable to load carts", () => {
-      request(server)
+    it("should throw an error if server unable to load carts or cart was empty", async () => {
+      const res = await request(server)
         .get("/api/cart")
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(404);
+      expect(res.body).toBe("the cart is empty");
     });
   });
   describe("POST/ createCart", () => {
     it("should add new cart with 201 created", async () => {
       await request(server).post("/api/cart").send(cartTest).expect(201);
     });
-    it("should throw an error with 422 when there is any invalid", async () => {
-      await request(server).post("/api/cart").send({ userId: 1 }).expect(422);
+    it("should throw an error with 400 when there is any invalid", async () => {
+      await request(server).post("/api/cart").send({ userId: 1 }).expect(400);
     });
     it.skip("should throw an error with 500 if server failed save the new card", async () => {
       await request(server).post("/api/cart").send(cartTest).expect(500);

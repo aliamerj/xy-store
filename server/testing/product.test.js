@@ -56,12 +56,13 @@ describe("/api/product", () => {
       ).toBeTruthy();
     });
 
-    it("should throw an error if there is problem", () => {
-      request(server)
+    it("should return 404 if there is no product", async () => {
+      const res = await request(server)
         .get("/api/product")
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(404);
+      expect(res.body).toBe("there is no product ");
     });
   });
   describe("GET/ getProduct ", () => {

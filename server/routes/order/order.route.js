@@ -1,4 +1,6 @@
 const express = require("express");
+const validatorMiddleware = require("../../midleware/validator.middleware");
+const { validateCreateOrder } = require("../../modules/validaters");
 const {
   createOrder,
   updateOrder,
@@ -8,10 +10,10 @@ const {
 } = require("./order.controller");
 
 const route = express.Router();
-route.post("/", createOrder); // tested
-route.put("/:id", updateOrder); // tested
-route.delete("/:id", deleteOrder); // testing
-route.get("/", getAllOrder); //tested
-route.get("/find/:userId", getUserOrder); //test
+route.post("/", [validatorMiddleware(validateCreateOrder),createOrder]); 
+route.put("/:id",[validatorMiddleware(validateCreateOrder)],updateOrder); 
+route.delete("/:id", deleteOrder); 
+route.get("/", getAllOrder); 
+route.get("/find/:userId", getUserOrder);
 
 module.exports = route;
