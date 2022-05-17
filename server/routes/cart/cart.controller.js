@@ -5,16 +5,11 @@ const Cart = require("../../modules/cart.module");
 const createCart = async (req, res) => {
   let cartInfo = _.pick(req.body, ["userId", "products"]);
   const newcart = new Cart(cartInfo);
-
-  try {
-    const cartSaved = await newcart.save();
-    res.status(201).json({
-      userId: cartSaved.userId,
-      Products: cartSaved.Products,
-    });
-  } catch (error) {
-    res.status(500).json(error);
-  }
+  const cartSaved = await newcart.save();
+  res.status(201).json({
+    userId: cartSaved.userId,
+    Products: cartSaved.Products,
+  });
 };
 
 const updateCart = (req, res) => {

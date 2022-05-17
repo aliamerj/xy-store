@@ -14,20 +14,16 @@ const createProduct = async (req, res) => {
   ]);
   const newProduct = new Product(productInfo);
 
-  try {
-    const productSaved = await newProduct.save();
-    res.status(201).json({
-      title: productSaved.title,
-      description: productSaved.description,
-      image: productSaved.image,
-      categories: productSaved.categories,
-      size: productSaved.size,
-      color: productSaved.color,
-      price: productSaved.price,
-    });
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
+  const productSaved = await newProduct.save();
+  res.status(201).json({
+    title: productSaved.title,
+    description: productSaved.description,
+    image: productSaved.image,
+    categories: productSaved.categories,
+    size: productSaved.size,
+    color: productSaved.color,
+    price: productSaved.price,
+  });
 };
 
 const updateProduct = (req, res) => {

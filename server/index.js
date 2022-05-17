@@ -1,14 +1,17 @@
+require("express-async-errors");
+const winston = require("winston");
+require("dotenv").config();
 const express = require("express");
-const configDb = require("config");
+
 const app = express();
 
-require("dotenv").config();
-const DB = configDb.get("db");
-require("./startup/db")(DB);
-app.use(express.json());
-require("./startup/routes")(app);
+require("./startup/logging")();
+require("./startup/config")();
+require("./startup/db")();
+require("./startup/routes")(app, express);
+
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () =>
-  console.log(`Listening on port ${port}...`)
+  winston.info(`Listening on port ${port}...`)
 );
 module.exports = server;

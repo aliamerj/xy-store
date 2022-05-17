@@ -12,18 +12,14 @@ const createOrder = async (req, res) => {
   ]);
   const newOrder = new Order(orderInfo);
 
-  try {
-    const orderSaved = await newOrder.save();
-    res.status(201).json({
-      userId: orderSaved.userId,
-      Products: orderSaved.Products,
-      amount: orderSaved.amount,
-      address: orderSaved.address,
-      status: orderSaved.status,
-    });
-  } catch (error) {
-    res.status(500).json(error);
-  }
+  const orderSaved = await newOrder.save();
+  res.status(201).json({
+    userId: orderSaved.userId,
+    Products: orderSaved.Products,
+    amount: orderSaved.amount,
+    address: orderSaved.address,
+    status: orderSaved.status,
+  });
 };
 
 const updateOrder = (req, res) => {

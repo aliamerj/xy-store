@@ -21,11 +21,12 @@ afterEach(async () => {
   server.close();
 });
 describe("/api/register", () => {
-  it("should return 200 pass if user enter all info properly", async () => {
-    await request(server)
+  it("should return 201 pass if user enter all info properly", async () => {
+    const res = await request(server)
       .post("/api/register")
       .send(newRegistering)
       .expect(201);
+    expect(res.body).toBe("successfully registered");
   });
   it("should return 400  if there is missing info or invalid", async () => {
     newRegistering.username = null;

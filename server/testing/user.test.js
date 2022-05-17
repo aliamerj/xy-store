@@ -1,9 +1,5 @@
-const Joi = require("joi");
 const request = require("supertest");
-const validatorMiddleware = require("../midleware/validator.middleware");
 const User = require("../modules/user.module");
-const validaters = require("../modules/validaters");
-const userController = require("../routes/user/user.controller");
 let server;
 let newRegistering;
 jest.setTimeout(10000);

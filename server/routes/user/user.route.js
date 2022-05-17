@@ -1,7 +1,7 @@
 const express = require("express");
-const { auth } = require("../../midleware/authentications");
-const { accessToHisOwnData } = require("../../midleware/authorizations");
-const validatorMiddleware = require("../../midleware/validator.middleware");
+const { auth } = require("../../middleware/authentications");
+const { accessToHisOwnData } = require("../../middleware/authorizations");
+const validatorMiddleware = require("../../middleware/validator.middleware");
 const { validateRegister } = require("../../modules/validaters");
 const { getUser, changeInfo } = require("./user.controller");
 

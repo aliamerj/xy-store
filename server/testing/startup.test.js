@@ -1,6 +1,18 @@
+const configDb = require("config");
+const config = require("../startup/config");
 jest.setTimeout(100000);
-describe("mongoose connections", () => {
-  it("should console with the error if the db link was invalid", (done) => {
-    expect(require("../startup/db")("mongodb+srv://1")).toBeUndefined();
+describe("configrations ", () => {
+  it("should throw an error if  config key for db is not defiened", () => {
+    jest.spyOn(configDb, "get").mockReturnValueOnce(undefined);
+    expect.assertions(2);
+    try {
+      config();
+    } catch (error) {
+      expect(error).toBeInstanceOf(TypeError);
+      expect(error).toHaveProperty(
+        "message",
+        "FATAL ERROR : DB KEY is not defined"
+      );
+    }
   });
 });
