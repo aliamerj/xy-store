@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { ADD_TO_CART } from "../../store/cart.store/cartSlice";
+import { ADD_TO_CART } from "../../../store/cart.store/cartSlice";
 
 const Product = ({ product }) => {
   const dispatch = useDispatch();

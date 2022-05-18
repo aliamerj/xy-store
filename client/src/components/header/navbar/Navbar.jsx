@@ -1,10 +1,12 @@
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import {MenuItem} from "@mui/material";
 import Logo from "./Logo";
 import SearchBox from "./SearchBox";
 import {
   AppBarStyle,
-  TitleStyle,
-  GrowStyle,
+  Center,
+  Left,
+  Right,
+  Wrapper,
 } from "../../../styles/header.style/Navbar.style";
 
 import { useState } from "react";
@@ -16,20 +18,23 @@ const Navbar = () => {
 
   return (
     <div>
-      <AppBar position="relative" color="inherit">
-        <AppBarStyle>
-          <Toolbar>
-            <Typography component={"span"} color="inherit">
-              <TitleStyle>
-                <Logo />
-              </TitleStyle>
-            </Typography>
+      <AppBarStyle>
+        <Wrapper>
+          <Left>
+            <Logo />
+          </Left>
+          <Center>
             <SearchBox />
-            <GrowStyle />
-            <Cart cartState={{ showDrawer: [showDrawer, setShowDrawer] }} />
-          </Toolbar>
-        </AppBarStyle>
-      </AppBar>
+          </Center>
+          <Right>
+            <MenuItem>REGISTER</MenuItem>
+            <MenuItem>SIGN IN</MenuItem>
+            <MenuItem>
+              <Cart cartState={{ showDrawer: [showDrawer, setShowDrawer] }} />
+            </MenuItem>
+          </Right>
+        </Wrapper>
+      </AppBarStyle>
       <CartDrawer cartState={{ showDrawer: [showDrawer, setShowDrawer] }} />
     </div>
   );

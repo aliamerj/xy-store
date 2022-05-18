@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
-} from "../../../../store/cart.store/cartSlice";
+} from "../../../../../store/cart.store/cartSlice";
 
 const QuantityControler = ({ item, display, marginLeft, marginTop }) => {
   const dispatch = useDispatch();
