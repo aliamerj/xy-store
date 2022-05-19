@@ -25,8 +25,12 @@ const CartDrawer = ({ cartState }) => {
         <CartHeader />
         {productCartArray.length !== 0 ? (
           <div>
-            <CartItems />
-            <CartFooter />
+            <CartItems
+              cartState={{ showDrawer: [showDrawer, setShowDrawer] }}
+            />
+            <CartFooter
+              cartState={{ showDrawer: [showDrawer, setShowDrawer] }}
+            />
           </div>
         ) : (
           <EmptyCart />

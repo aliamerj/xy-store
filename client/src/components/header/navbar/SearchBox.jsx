@@ -1,15 +1,24 @@
-import { Search } from "@mui/icons-material";
+import SearchIcon from "@mui/icons-material/Search";
 import {
-  InputSearchBoxStyle,
   SearchBoxStyle,
-} from "../../../styles/header.style/Navbar.style/SearchBox.style";
+  Search,
+  SearchIconWrapper,
+  StyledInputBase,
+} from "../../../styles/Navbar.style/SearchBox.style";
 
 const SearchBox = () => {
   return (
     <>
       <SearchBoxStyle>
-        <Search />
-        <InputSearchBoxStyle />
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            inputProps={{ "aria-label": "search" }}
+          />
+        </Search>
       </SearchBoxStyle>
     </>
   );

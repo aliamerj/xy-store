@@ -33,11 +33,6 @@ const Product = ({ product }) => {
         <Typography variant="h5">
           {product.price.formatted_with_symbol}
         </Typography>
-        <Typography
-          dangerouslySetInnerHTML={{ __html: product.description }}
-          variant="body2"
-          color="text.secondary"
-        />
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
