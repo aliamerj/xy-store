@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import CartDrawer from "../cart/cartBody/cartFeatures/CartDrawer";
-import Cart from "../cart/cartBody/Cart";
+import Cart from "../cart/cartBody/CartIcon";
 import { DashboardStyle } from "../../../styles/Navbar.style/dashbord.style";
 import Account from "./Account";
 const Dashboard = () => {
