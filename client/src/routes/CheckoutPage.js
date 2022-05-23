@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { get } from "react-hook-form";
 import { useSelector } from "react-redux";
 import CheckoutComponent from "../components/content/CheckoutForm/Checkout/Checkout.compoment";
 
