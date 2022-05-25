@@ -4,6 +4,7 @@ import { countriesSupporting } from "../../../../FakeData/countriesSupporting";
 import { Grid, TextField } from "@mui/material";
 import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import { FieldStyle } from "../../../../styles/content.style/form.style/formInput.style";
 export default function CountryInput({ name, label, required }) {
   const {
     control,
@@ -25,7 +26,7 @@ export default function CountryInput({ name, label, required }) {
         name={name}
         render={({ message }) => handleErrorInput(message)}
       />
-      <Grid item xs={12} sm={6}>
+      <FieldStyle>
         <Controller
           name={name}
           control={control}
@@ -38,7 +39,7 @@ export default function CountryInput({ name, label, required }) {
           render={({ field }) => (
             <Autocomplete
               id="country-select-demo"
-              sx={{ width: 300 }}
+              fullWidth
               options={countriesSupporting}
               autoHighlight
               getOptionLabel={(option) => option.label}
@@ -72,7 +73,7 @@ export default function CountryInput({ name, label, required }) {
             />
           )}
         />
-      </Grid>
+      </FieldStyle>
     </>
   );
 }

@@ -3,16 +3,23 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Account() {
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+  const nav = useNavigate();
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleGoToRegisterPage = () => {
+    nav("/register");
+    setAnchorEl(null);
   };
 
   const handleClose = () => {
@@ -45,7 +52,7 @@ export default function Account() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>REGISTER</MenuItem>
+        <MenuItem onClick={handleGoToRegisterPage}>REGISTER</MenuItem>
         <MenuItem onClick={handleClose}>SIGN IN</MenuItem>
       </Menu>
     </>

@@ -2,6 +2,7 @@ import { Grid, TextField } from "@mui/material";
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import { FieldStyle } from "../../../../styles/content.style/form.style/formInput.style";
 
 function FormInput({ name, label, required }) {
   const {
@@ -24,12 +25,13 @@ function FormInput({ name, label, required }) {
         name={name}
         render={({ message }) => handleErrorInput(message)}
       />
-      <Grid item xs={12} sm={6}>
+      <FieldStyle>
         <Controller
           name={name}
           control={control}
           render={({ field }) => (
             <TextField
+              fullWidth
               required={required}
               error={isError}
               helperText={errorMessage}
@@ -43,11 +45,10 @@ function FormInput({ name, label, required }) {
                   ? "password"
                   : "text"
               }
-              fullWidth
             />
           )}
         />
-      </Grid>
+      </FieldStyle>
     </>
   );
 }
