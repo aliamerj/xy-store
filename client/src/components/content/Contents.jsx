@@ -3,11 +3,14 @@ import { commerce } from "../../lib/Commerce";
 import Products from "./products/Products";
 const Contents = () => {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [cart, setCart] = useState({});
 
   const fetchProducts = async () => {
-    const { data } = await commerce.products.list();
-    setProducts(data);
+    await commerce.products
+      .list()
+      .then(({ data }) => setProducts(data))
+      .then(() => setIsLoading(true));
   };
 
   const fetchCart = async () => {
@@ -20,7 +23,7 @@ const Contents = () => {
   }, []);
   return (
     <>
-      <Products products={products} />
+      <Products products={products} isLoading={isLoading} />
     </>
   );
 };
