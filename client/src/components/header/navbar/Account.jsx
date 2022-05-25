@@ -21,6 +21,10 @@ export default function Account() {
     nav("/register");
     setAnchorEl(null);
   };
+  const handleGoToSignInPage = () => {
+    nav("/signin");
+    setAnchorEl(null);
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -53,7 +57,7 @@ export default function Account() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleGoToRegisterPage}>REGISTER</MenuItem>
-        <MenuItem onClick={handleClose}>SIGN IN</MenuItem>
+        <MenuItem onClick={handleGoToSignInPage}>SIGN IN</MenuItem>
       </Menu>
     </>
   );
