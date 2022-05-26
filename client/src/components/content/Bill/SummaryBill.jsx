@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import {
-  ButtonStyle,
+  ButtonStyleSummary,
   SummaryItemPriceStyle,
   SummaryItemStyle,
   SummaryItemTextStyle,
@@ -30,7 +30,7 @@ const SummaryBill = () => {
         <SummaryItemTextStyle>Total</SummaryItemTextStyle>
         <SummaryItemPriceStyle>$ {getCartItems}</SummaryItemPriceStyle>
       </SummaryItemStyle>
-      <ButtonStyle>CHECKOUT NOW</ButtonStyle>
+      <ButtonStyleSummary>CHECKOUT NOW</ButtonStyleSummary>
     </SummaryStyle>
   );
 };

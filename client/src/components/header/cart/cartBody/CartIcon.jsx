@@ -9,7 +9,7 @@ const Cart = ({ cartState }) => {
   } = { showDrawer: useState(0), ...(cartState || {}) };
 
   const getNumberOfItems = useSelector(
-    (state) => state.entities.cart.cartTotalQuantity
+    (state) => state.entities.cart.cartItems
   );
 
   return (
@@ -18,7 +18,7 @@ const Cart = ({ cartState }) => {
       color="inherit"
       onClick={() => setShowDrawer(true)}
     >
-      <Badge badgeContent={getNumberOfItems} color="secondary">
+      <Badge badgeContent={getNumberOfItems.length} color="secondary">
         <ShoppingCartIcon />
       </Badge>
     </IconButton>

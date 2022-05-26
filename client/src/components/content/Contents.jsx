@@ -1,3 +1,4 @@
+import { Box, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 import { commerce } from "../../lib/Commerce";
 import Products from "./products/Products";
@@ -23,7 +24,20 @@ const Contents = () => {
   }, []);
   return (
     <>
-      <Products products={products} isLoading={isLoading} />
+      {isLoading ? (
+        <Products products={products} isLoading={isLoading} />
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "3%",
+            marginBottom: "50%",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
     </>
   );
 };

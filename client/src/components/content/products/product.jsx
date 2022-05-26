@@ -9,10 +9,12 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { ADD_TO_CART } from "../../../store/cart.store/cartSlice";
 
 const Product = ({ product, isLoading }) => {
   const dispatch = useDispatch();
+  const nav = useNavigate();
 
   const handleAddProduct = (product) => {
     dispatch(ADD_TO_CART(product));
@@ -21,12 +23,17 @@ const Product = ({ product, isLoading }) => {
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       {isLoading ? (
-        <CardMedia
-          component="img"
-          image={product.image.url}
-          alt={product.name}
-          height="300"
-        />
+        <CardActions
+          onClick={() => nav(`/product/${product.id}`)}
+          style={{ cursor: "pointer" }}
+        >
+          <CardMedia
+            component="img"
+            image={product.image.url}
+            alt={product.name}
+            height="300"
+          />
+        </CardActions>
       ) : (
         <Skeleton
           animation="wave"

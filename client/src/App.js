@@ -7,6 +7,7 @@ import Checkout from "./routes/CheckoutPage";
 import MainStructurePage from "./routes/MainStructurePage";
 import RegisterPage from "./routes/RegisterPage";
 import SignInPage from "./routes/SignInPage";
+import ProductPage from "./routes/ProductPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainStructurePage />}>
             <Route index element={<Home />} />
+            <Route path="/product/:productId" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/register" element={<RegisterPage />} />

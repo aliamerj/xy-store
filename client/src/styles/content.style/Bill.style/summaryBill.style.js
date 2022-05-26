@@ -21,7 +21,7 @@ export const SummaryItemStyle = styled("div")(({ theme, type }) => ({
 
 export const SummaryItemTextStyle = styled("span")(() => ({}));
 export const SummaryItemPriceStyle = styled("span")(() => ({}));
-export const ButtonStyle = styled("button")(() => ({
+export const ButtonStyleSummary = styled("button")(() => ({
   width: "100%",
   padding: "10px",
   backgroundColor: "black",

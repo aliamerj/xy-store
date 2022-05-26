@@ -2,12 +2,9 @@ import { styled } from "@mui/material/styles";
 
 export const ContainerStyle = styled("div")(({ theme }) => ({
   display: "flex",
+  minHeight: "50px",
   backgroundColor: "#FAF0D7",
-  alignContent: "flex-end",
-
-  bottom: 0,
-
-  marginBottom: "auto",
+  marginTop: "10%",
   [theme.breakpoints.down("sm")]: {
     flexDirection: "column",
   },
