@@ -1,17 +1,9 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import CheckoutComponent from "../components/content/CheckoutForm/Checkout/Checkout.compoment";
-
-const Checkout = () => {
-  const getCartItems = useSelector((state) => state.entities.cart.cartItems);
-  const [order, setOrder] = useState({});
-  const [errorMessage, setErrorMessage] = useState("");
+const CheckoutPage = () => {
   return (
-    <div>
-      {getCartItems.map(cart =>  <CheckoutComponent cart={cart}
-      order={order} onCaptureCheckout={console.log(cart)} error={errorMessage}/>  )}
-    </div>
+    <>
+      <h1>Checkout page</h1>
+    </>
   );
 };
 
-export default Checkout;
+export default CheckoutPage;

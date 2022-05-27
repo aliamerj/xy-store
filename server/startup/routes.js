@@ -4,13 +4,19 @@ const productRoute = require("../routes/product/product.route");
 const cartRoute = require("../routes/cart/cart.route");
 const orderRoute = require("../routes/order/order.route");
 const errorMiddleware = require("../middleware/error.middleware");
+const patch = require("path");
 
 module.exports = function (app, express) {
   app.use(express.json());
-  app.use("/api/", authRoute);
-  app.use("/api/user", userRoute);
-  app.use("/api/product", productRoute);
-  app.use("/api/cart", cartRoute);
-  app.use("/api/order", orderRoute);
+  app.use(express.static(patch.join(__dirname, "..", "public")));
+
+  app.get("/*", (req, res) => {
+    res.sendFile(patch.join(__dirname, "..", "public", "index.html"));
+  });
+  app.use("/", authRoute);
+  app.use("/user", userRoute);
+  app.use("/product", productRoute);
+  app.use("/cart", cartRoute);
+  app.use("/order", orderRoute);
   app.use(errorMiddleware);
 };
