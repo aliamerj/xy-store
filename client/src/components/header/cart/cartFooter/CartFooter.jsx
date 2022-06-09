@@ -4,15 +4,14 @@ import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import handleCheckout from "../../../../utils/buttonHandler/checkoutButton";
 
 const CartFooter = ({ cartState }) => {
   const {
     showDrawer: [showDrawer, setShowDrawer],
   } = { showDrawer: useState(0), ...(cartState || {}) };
   const nav = useNavigate();
-  const getTotalAmount = useSelector(
-    (state) => state.entities.cart.cartTotalAmount
-  );
+  const cart = useSelector((state) => state.entities.cart);
   return (
     <>
       <Stack spacing={2} direction="column" marginX={4}>
@@ -20,10 +19,11 @@ const CartFooter = ({ cartState }) => {
           onClick={() => {
             nav("/checkout");
             setShowDrawer(false);
+            handleCheckout(cart.cartItems);
           }}
           variant="contained"
         >
-          Checkout Now (${getTotalAmount})
+          Checkout Now (${cart.cartTotalAmount})
         </Button>
         <Button
           onClick={() => {

@@ -3,6 +3,7 @@ const authRoute = require("../routes/auth/auth.route");
 const productRoute = require("../routes/product/product.route");
 const cartRoute = require("../routes/cart/cart.route");
 const orderRoute = require("../routes/order/order.route");
+const stripeRoute = require("../routes/payments/stripe.route");
 const errorMiddleware = require("../middleware/error.middleware");
 const patch = require("path");
 
@@ -18,5 +19,6 @@ module.exports = function (app, express) {
   app.use("/product", productRoute);
   app.use("/cart", cartRoute);
   app.use("/order", orderRoute);
+  app.use("/paymant", stripeRoute);
   app.use(errorMiddleware);
 };
