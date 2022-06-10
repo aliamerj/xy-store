@@ -2,8 +2,12 @@ require("express-async-errors");
 const logger = require("./startup/logging");
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
+
+const ClIENT_URL = "http://localhost:3000";
 
 const app = express();
+app.use(cors({ origin: ClIENT_URL }));
 
 require("./startup/config")();
 require("./startup/db")();

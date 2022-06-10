@@ -1,9 +1,7 @@
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
-const uuid = require("uuid");
 const DOMAIN = "http://localhost:5000";
 const createcheckoutSession = async (req, res) => {
   const { products, token, totalAmount } = req.body;
-  const idempontencyKey = uuid();
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {

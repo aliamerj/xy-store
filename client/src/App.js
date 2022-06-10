@@ -5,10 +5,10 @@ import Home from "./routes/HomePage";
 import CartPage from "./routes/BillPage";
 import MainStructurePage from "./routes/MainStructurePage";
 import RegisterPage from "./routes/RegisterPage";
-import SignInPage from "./routes/SignInPage";
 import ProductPage from "./routes/ProductPage";
 import NotFoundPage from "./routes/NotFoundPage";
 import CheckutSuccess from "./routes/checkoutSuccessPage";
+import LoginInPage from "./routes/LoginPage";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout-success" element={<CheckutSuccess />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/signin" element={<SignInPage />} />
+            <Route path="/login" element={<LoginInPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>

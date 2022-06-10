@@ -22,7 +22,7 @@ export default function Account() {
     setAnchorEl(null);
   };
   const handleGoToSignInPage = () => {
-    nav("/signin");
+    nav("/login");
     setAnchorEl(null);
   };
 

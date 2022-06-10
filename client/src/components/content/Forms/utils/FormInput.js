@@ -3,8 +3,13 @@ import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { FieldStyle } from "../../../../styles/content.style/form.style/formInput.style";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 function FormInput({ name, label, required }) {
+  const auth = useSelector((state) => state.entities.auth.error);
+  let location = useLocation().pathname;
+
   const {
     control,
     formState: { errors },
@@ -15,6 +20,8 @@ function FormInput({ name, label, required }) {
     if (errors) {
       isError = true;
       errorMessage = message;
+    } else if (auth && location === "/login") {
+      isError = true;
     }
   };
 
