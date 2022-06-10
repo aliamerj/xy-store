@@ -3,7 +3,6 @@ import store from "./store/store";
 import { Route, Routes } from "react-router-dom";
 import Home from "./routes/HomePage";
 import CartPage from "./routes/BillPage";
-import CheckoutPage from "./routes/CheckoutPage";
 import MainStructurePage from "./routes/MainStructurePage";
 import RegisterPage from "./routes/RegisterPage";
 import SignInPage from "./routes/SignInPage";
@@ -20,7 +19,6 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/product/:productId" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/checkout-success" element={<CheckutSuccess />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/signin" element={<SignInPage />} />

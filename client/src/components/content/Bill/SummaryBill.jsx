@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import StripeCheckout from "react-stripe-checkout";
 import {
   ButtonStyleSummary,
   SummaryItemPriceStyle,
@@ -11,6 +10,7 @@ import {
 } from "../../../styles/content.style/Bill.style/summaryBill.style";
 import { useEffect, useState } from "react";
 import { userRequest } from "../../../requestMethods";
+import PayButton from "../checkout/PayButton";
 const SummaryBill = () => {
   const [stripeToken, setStripeToken] = useState(null);
   const nav = useNavigate();
@@ -53,18 +53,9 @@ const SummaryBill = () => {
         <SummaryItemTextStyle>Total</SummaryItemTextStyle>
         <SummaryItemPriceStyle>$ {totalAmount}</SummaryItemPriceStyle>
       </SummaryItemStyle>
-      <StripeCheckout
-        name="XY-Store"
-        image="img"
-        billingAddress
-        shippingAddress
-        description={`your total is ${totalAmount}$`}
-        amount={totalAmount * 100}
-        token={onToken}
-        stripeKey={process.env.REACT_APP_STRIPE_KEY}
-      >
-        <ButtonStyleSummary>CHECKOUT NOW</ButtonStyleSummary>
-      </StripeCheckout>
+      <PayButton
+        buttonStyle={<ButtonStyleSummary>CHECKOUT NOW</ButtonStyleSummary>}
+      />
     </SummaryStyle>
   );
 };

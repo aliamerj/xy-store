@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import handleCheckout from "../../../../utils/buttonHandler/checkoutButton";
+import PayButton from "../../../content/checkout/PayButton";
 
 const CartFooter = ({ cartState }) => {
   const {
@@ -15,16 +15,15 @@ const CartFooter = ({ cartState }) => {
   return (
     <>
       <Stack spacing={2} direction="column" marginX={4}>
-        <Button
-          onClick={() => {
-            nav("/checkout");
-            setShowDrawer(false);
-            handleCheckout(cart.cartItems);
-          }}
-          variant="contained"
-        >
-          Checkout Now (${cart.cartTotalAmount})
-        </Button>
+        <PayButton
+          buttonStyle={
+            <Stack spacing={2} direction="column" marginX={0}>
+              <Button variant="contained">
+                Checkout Now (${cart.cartTotalAmount})
+              </Button>
+            </Stack>
+          }
+        />
         <Button
           onClick={() => {
             nav("/cart");
