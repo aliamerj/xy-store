@@ -3,14 +3,17 @@ const { isEmail, isStrongPassword } = require("validator/validator");
 const jwt = require("jsonwebtoken");
 const UserSchema = new mongoose.Schema(
   {
-    username: {
+    firstName: {
       type: String,
+      minlength: 2,
+      maxlength: 10,
       required: true,
-      unique: true,
-      index: true,
-      sparse: true,
-      minlength: 5,
-      maxlength: 20,
+    },
+    lastName: {
+      type: String,
+      minlength: 2,
+      maxlength: 10,
+      required: true,
     },
     email: {
       type: String,
@@ -26,6 +29,29 @@ const UserSchema = new mongoose.Schema(
       required: true,
       validator: [isStrongPassword, "week password , try agin"],
     },
+    country: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    address1: {
+      type: String,
+      minlength: 5,
+      maxlength: 50,
+    },
+    address2: {
+      type: String,
+      minlength: 5,
+      maxlength: 50,
+    },
+    zip: {
+      type: Number,
+      minlength: 5,
+      maxlength: 50,
+    },
     isAdmin: {
       type: Boolean,
       default: false,
@@ -37,7 +63,7 @@ UserSchema.methods.generateAuthToken = function () {
   const token = jwt.sign(
     { _id: this._id, isAdmin: this.isAdmin },
     process.env.JWT_PRIVATE_KEY,
-    { expiresIn: "1d" }
+    { expiresIn: "1h" }
   );
   return token;
 };

@@ -6,6 +6,7 @@ const authSlice = createSlice({
     currentUser: null,
     isFetching: false,
     error: false,
+    errorMessage: "",
   },
   reducers: {
     START_LOGIN: (state, action) => {
@@ -17,6 +18,7 @@ const authSlice = createSlice({
     },
     FAILURE_LOGIN: (state, action) => {
       state.isFetching = false;
+      state.errorMessage = action.payload;
       state.error = true;
     },
   },

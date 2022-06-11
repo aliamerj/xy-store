@@ -5,8 +5,11 @@ import { TextField } from "@mui/material";
 import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { FieldStyle } from "../../../../styles/content.style/form.style/formInput.style";
+import { useState } from "react";
 export default function CountryInput({ name, label, required }) {
+  const [country, setCountry] = useState(countriesSupporting[3]);
   const {
+    register,
     control,
     formState: { errors },
   } = useFormContext();
@@ -36,14 +39,21 @@ export default function CountryInput({ name, label, required }) {
           id="outlined-error"
           variant="outlined"
           size="small"
-          render={({ field }) => (
+          render={() => (
             <Autocomplete
+              value={country}
+              onChange={(_, data) => {
+                console.log(data);
+                setCountry(data);
+                return data;
+              }}
               id="country-select-demo"
               fullWidth
               options={countriesSupporting}
               autoHighlight
-              getOptionLabel={(option) => option.label}
-              {...field}
+              getOptionLabel={(option) =>
+                option ? option.label : countriesSupporting[3].label
+              }
               renderOption={(props, option) => (
                 <Box
                   component="li"
@@ -57,17 +67,19 @@ export default function CountryInput({ name, label, required }) {
                     srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
                     alt=""
                   />
-                  {option.label} ({option.code}) +{option.phone}
+                  {option.label} ({option.code})
                 </Box>
               )}
               renderInput={(params) => (
                 <TextField
+                  defaultValue={countriesSupporting[1]}
                   {...params}
                   label="Choose a country"
                   inputProps={{
                     ...params.inputProps,
                     autoComplete: "new-password",
                   }}
+                  {...register("country")}
                 />
               )}
             />

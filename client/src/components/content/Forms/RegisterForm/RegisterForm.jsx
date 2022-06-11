@@ -5,14 +5,17 @@ import SendIcon from "@mui/icons-material/Send";
 import registerSchema from "./RegisterValidation";
 import CountryInput from "../utils/CountryInput";
 import Button from "@mui/material/Button";
+import registerHandler from "../../../../utils/auth/register.auth";
+import { useDispatch } from "react-redux";
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
   const methods = useForm({
     resolver: yupResolver(registerSchema),
   });
   const { handleSubmit } = methods;
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
+    <form onSubmit={handleSubmit((data) => registerHandler(data, dispatch))}>
       <FormProvider {...methods}>
         <FormInput required name="firstName" label="First name" />
         <FormInput required name="lastName" label="Last name" />

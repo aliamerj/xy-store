@@ -9,9 +9,15 @@ const validateLogin = (uesr) => {
 };
 const validateRegister = (user) => {
   const schema = Joi.object({
-    username: Joi.string().min(5).max(20).required(),
+    firstName: Joi.string().min(2).max(10).required(),
+    lastName: Joi.string().min(3).max(10).required(),
     email: Joi.string().email().required(),
     password: Joi.string().min(5).max(255).required(),
+    country: Joi.string().required(),
+    city: Joi.string().required(),
+    address1: Joi.string().min(5).max(50),
+    address2: Joi.string().min(5).max(50),
+    zip: Joi.number().required(),
   });
   return schema.validate(user);
 };
