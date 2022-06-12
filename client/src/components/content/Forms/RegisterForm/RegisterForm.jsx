@@ -17,9 +17,7 @@ const RegisterForm = () => {
   });
   const { handleSubmit } = methods;
   return (
-    <form
-      onSubmit={handleSubmit((data) => registerHandler(data, dispatch, nav))}
-    >
+    <form onSubmit={handleSubmit((data) => registerHandler(data, dispatch))}>
       <FormProvider {...methods}>
         <FormInput required name="firstName" label="First name" />
         <FormInput required name="lastName" label="Last name" />

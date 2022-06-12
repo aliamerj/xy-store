@@ -43,7 +43,6 @@ export default function CountryInput({ name, label, required }) {
             <Autocomplete
               value={country}
               onChange={(_, data) => {
-                console.log(data);
                 setCountry(data);
                 return data;
               }}

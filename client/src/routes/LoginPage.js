@@ -20,7 +20,6 @@ const LoginInPage = () => {
   }, [window.location.href]);
   const auth = useSelector((state) => state.entities.auth.error);
   const errorMessage = useSelector((state) => state.entities.auth.errorMessage);
-  const currentPage = window.location.href.includes("/login");
   return (
     <>
       <ContainerStyle>
@@ -35,7 +34,7 @@ const LoginInPage = () => {
                   Sign in to your account
                 </Typography>
               </FormTitleStyle>
-              {auth && errorMessage && currentPage ? (
+              {auth && errorMessage ? (
                 <Typography marginBottom={2}>
                   <Alert severity="error">{errorMessage}</Alert>
                 </Typography>

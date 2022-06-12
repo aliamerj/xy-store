@@ -1,7 +1,6 @@
 const _ = require("lodash");
 const User = require("../../modules/user.module");
 const hashPasswordsUtils = require("../../utils/hashPasswords.utils");
-const { setAuthAccessToken } = require("../../utils/setAuthToken.utils");
 const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
@@ -18,10 +17,18 @@ const register = async (req, res) => {
   ]);
   let newUser = new User(userInfo);
   await hashPasswordsUtils(newUser);
-  setAuthAccessToken(newUser, res);
+  const accessToken = newUser.generateAuthToken();
   newUser.refreshToken.push(newUser.generateRefreshToken());
   await newUser.save();
-  res.status(201).json(newUser);
+  return res
+    .status(201)
+    .cookie("auth", accessToken, {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+      maxAge: 10 * 1000,
+    })
+    .json("login successed");
 };
 
 const login = async (req, res) => {
@@ -32,10 +39,18 @@ const login = async (req, res) => {
       user.password
     );
     if (validPassword) {
-      setAuthAccessToken(user, res);
+      const accessToken = user.generateAuthToken();
       user.refreshToken.push(user.generateRefreshToken());
 
-      return res.status(200).json("login successed");
+      return res
+        .status(200)
+        .cookie("auth", accessToken, {
+          httpOnly: true,
+          sameSite: "None",
+          secure: true,
+          maxAge: 10 * 1000,
+        })
+        .json("login successed");
     }
   } catch (error) {
     return res.status(400).json("Incorrect Email or password .");

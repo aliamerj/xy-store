@@ -9,10 +9,12 @@ import NotFoundPage from "./routes/NotFoundPage";
 import CheckutSuccess from "./routes/checkoutSuccessPage";
 import LoginInPage from "./routes/LoginPage";
 import { useEffect } from "react";
-import { RELOAD_ERROR_MESSAGE } from "./store/auth.store/authSlice";
 
 function App() {
   const currentUser = useSelector((state) => state.entities.auth.currentUser);
+  useEffect(() => {
+    console.log(document.cookie.split("; "));
+  });
 
   return (
     <>
