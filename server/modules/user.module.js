@@ -56,6 +56,7 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    refreshToken: [String],
   },
   { timestamps: true }
 );
@@ -63,7 +64,15 @@ UserSchema.methods.generateAuthToken = function () {
   const token = jwt.sign(
     { _id: this._id, isAdmin: this.isAdmin },
     process.env.JWT_PRIVATE_KEY,
-    { expiresIn: "1h" }
+    { expiresIn: "10m" }
+  );
+  return token;
+};
+UserSchema.methods.generateRefreshToken = function () {
+  const token = jwt.sign(
+    { _id: this._id, isAdmin: this.isAdmin },
+    process.env.JWT_REFRESH_KEY,
+    { expiresIn: "2d" }
   );
   return token;
 };

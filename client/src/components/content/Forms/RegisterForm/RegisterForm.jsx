@@ -7,15 +7,19 @@ import CountryInput from "../utils/CountryInput";
 import Button from "@mui/material/Button";
 import registerHandler from "../../../../utils/auth/register.auth";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
+  const nav = useNavigate();
   const dispatch = useDispatch();
   const methods = useForm({
     resolver: yupResolver(registerSchema),
   });
   const { handleSubmit } = methods;
   return (
-    <form onSubmit={handleSubmit((data) => registerHandler(data, dispatch))}>
+    <form
+      onSubmit={handleSubmit((data) => registerHandler(data, dispatch, nav))}
+    >
       <FormProvider {...methods}>
         <FormInput required name="firstName" label="First name" />
         <FormInput required name="lastName" label="Last name" />

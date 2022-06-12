@@ -1,6 +1,6 @@
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import store from "./store/store";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./routes/HomePage";
 import CartPage from "./routes/BillPage";
 import MainStructurePage from "./routes/MainStructurePage";
@@ -11,21 +11,39 @@ import CheckutSuccess from "./routes/checkoutSuccessPage";
 import LoginInPage from "./routes/LoginPage";
 
 function App() {
+  const currentUser = useSelector((state) => state.entities.auth.currentUser);
   return (
     <>
-      <Provider store={store}>
-        <Routes>
-          <Route path="/" element={<MainStructurePage />}>
-            <Route index element={<Home />} />
-            <Route path="/product/:productId" element={<ProductPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout-success" element={<CheckutSuccess />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginInPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
-        </Routes>
-      </Provider>
+      <Routes>
+        <Route path="/" element={<MainStructurePage />}>
+          <Route index element={<Home />} />
+          <Route path="/product/:productId" element={<ProductPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout-success" element={<CheckutSuccess />} />
+          <Route
+            path="/register"
+            element={
+              currentUser === "login successed" ? (
+                <Navigate to="/" replace />
+              ) : (
+                <RegisterPage />
+              )
+            }
+          />
+
+          <Route
+            path="/login"
+            element={
+              currentUser === "login successed" ? (
+                <Navigate to="/" replace />
+              ) : (
+                <LoginInPage />
+              )
+            }
+          />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
     </>
   );
 }

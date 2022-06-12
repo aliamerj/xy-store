@@ -1,7 +1,7 @@
 const _ = require("lodash");
 const User = require("../../modules/user.module");
 const hashPasswordsUtils = require("../../utils/hashPasswords.utils");
-const setAuthTokenUtils = require("../../utils/setAuthToken.utils");
+const { setAuthAccessToken } = require("../../utils/setAuthToken.utils");
 const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
@@ -18,9 +18,10 @@ const register = async (req, res) => {
   ]);
   let newUser = new User(userInfo);
   await hashPasswordsUtils(newUser);
+  setAuthAccessToken(newUser, res);
+  newUser.refreshToken.push(newUser.generateRefreshToken());
   await newUser.save();
-  setAuthTokenUtils(newUser, res);
-  res.status(201).json("successfully registered");
+  res.status(201).json(newUser);
 };
 
 const login = async (req, res) => {
@@ -31,7 +32,9 @@ const login = async (req, res) => {
       user.password
     );
     if (validPassword) {
-      setAuthTokenUtils(user, res);
+      setAuthAccessToken(user, res);
+      user.refreshToken.push(user.generateRefreshToken());
+
       return res.status(200).json("login successed");
     }
   } catch (error) {
@@ -39,5 +42,22 @@ const login = async (req, res) => {
   }
 };
 
-exports.register = register;
-exports.login = login;
+const refrechToken = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  user.generateAuthToken();
+  user.refreshToken.push(user.generateRefreshToken());
+  return res.sendStatus(200);
+};
+const signout = (req, res) => {
+  User.findOneAndDelete({ refreshToken: req.body.refreshToken[0] })
+    .then(() => res.status(200).json("Sign Out successfully"))
+    .catch((error) => res.status(404).json(error.message));
+
+  return res.status(204).json("log out successfully");
+};
+module.exports = {
+  login,
+  register,
+  refrechToken,
+  signout,
+};

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
 
 const authSlice = createSlice({
   name: "auth",
@@ -21,9 +22,14 @@ const authSlice = createSlice({
       state.errorMessage = action.payload;
       state.error = true;
     },
+    SIGN_OUT: (state, action) => {
+      state.currentUser = null;
+      storage.removeItem("root");
+    },
   },
 });
 
-export const { SUCCESS_LOGIN, START_LOGIN, FAILURE_LOGIN } = authSlice.actions;
+export const { SUCCESS_LOGIN, START_LOGIN, FAILURE_LOGIN, SIGN_OUT } =
+  authSlice.actions;
 
 export default authSlice.reducer;

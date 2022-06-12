@@ -27,7 +27,7 @@ const RegisterPage = () => {
               <FormTitleStyle>
                 <Typography variant="h6">REGISTER</Typography>
               </FormTitleStyle>
-              {auth ? (
+              {auth && errorMessage ? (
                 <Typography marginBottom={2} component={"div"}>
                   <Alert severity="error">{errorMessage}</Alert>
                 </Typography>

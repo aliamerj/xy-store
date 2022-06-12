@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 
 const LoginInPage = () => {
   const auth = useSelector((state) => state.entities.auth.error);
+  const errorMessage = useSelector((state) => state.entities.auth.errorMessage);
   return (
     <>
       <ContainerStyle>
@@ -27,9 +28,9 @@ const LoginInPage = () => {
                   Sign in to your account
                 </Typography>
               </FormTitleStyle>
-              {auth ? (
+              {auth && errorMessage ? (
                 <Typography marginBottom={2}>
-                  <Alert severity="error">Incorrect Email or password .</Alert>
+                  <Alert severity="error">{errorMessage}</Alert>
                 </Typography>
               ) : null}
 

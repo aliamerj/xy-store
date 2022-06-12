@@ -1,25 +1,25 @@
-import IconButton from "@mui/material/IconButton";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import { IconButton } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import React, { useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { blue } from "@mui/material/colors";
+import { useDispatch } from "react-redux";
+import { SIGN_OUT } from "../../../../store/auth.store/authSlice";
 
-export default function Account() {
+const AccountUesr = () => {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-  const nav = useNavigate();
-
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleGoToRegisterPage = () => {
-    nav("/register");
+  const handleGoToSettingAccount = () => {
     setAnchorEl(null);
   };
-  const handleGoToSignInPage = () => {
-    nav("/login");
+  const handleSignOut = () => {
     setAnchorEl(null);
+    dispatch(SIGN_OUT());
   };
 
   const handleClose = () => {
@@ -35,7 +35,7 @@ export default function Account() {
         onClick={handleMenu}
         color="inherit"
       >
-        <AccountCircle />
+        <Avatar sx={{ bgcolor: blue[300] }}>N</Avatar>
       </IconButton>
       <Menu
         id="menu-appbar"
@@ -52,9 +52,11 @@ export default function Account() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleGoToRegisterPage}>REGISTER</MenuItem>
-        <MenuItem onClick={handleGoToSignInPage}>SIGN IN</MenuItem>
+        <MenuItem onClick={handleGoToSettingAccount}>My Account</MenuItem>
+        <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
       </Menu>
     </>
   );
-}
+};
+
+export default AccountUesr;
