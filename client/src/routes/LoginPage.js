@@ -9,11 +9,18 @@ import {
   ContainerFormStyle,
   WrapperFormStyle,
 } from "../styles/content.style/form.style/form.style";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { RELOAD_ERROR_MESSAGE } from "../store/auth.store/authSlice";
 
 const LoginInPage = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(RELOAD_ERROR_MESSAGE());
+  }, [window.location.href]);
   const auth = useSelector((state) => state.entities.auth.error);
   const errorMessage = useSelector((state) => state.entities.auth.errorMessage);
+  const currentPage = window.location.href.includes("/login");
   return (
     <>
       <ContainerStyle>
@@ -28,12 +35,11 @@ const LoginInPage = () => {
                   Sign in to your account
                 </Typography>
               </FormTitleStyle>
-              {auth && errorMessage ? (
+              {auth && errorMessage && currentPage ? (
                 <Typography marginBottom={2}>
                   <Alert severity="error">{errorMessage}</Alert>
                 </Typography>
               ) : null}
-
               <LoginForm />
             </WrapperFormStyle>
           </ContainerFormStyle>

@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import Logo from "../components/header/navbar/Logo";
 import RegisterForm from "../components/content/Forms/RegisterForm/RegisterForm";
 import { Alert } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   ContainerStyle,
@@ -12,9 +12,15 @@ import {
   ContainerFormStyle,
   WrapperFormStyle,
 } from "../styles/content.style/form.style/form.style";
+import { RELOAD_ERROR_MESSAGE } from "../store/auth.store/authSlice";
+import { useEffect } from "react";
 const RegisterPage = () => {
   const auth = useSelector((state) => state.entities.auth.error);
   const errorMessage = useSelector((state) => state.entities.auth.errorMessage);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(RELOAD_ERROR_MESSAGE());
+  }, [window.location.href]);
   return (
     <>
       <ContainerStyle>

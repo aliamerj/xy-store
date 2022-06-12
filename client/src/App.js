@@ -1,5 +1,4 @@
-import { Provider, useSelector } from "react-redux";
-import store from "./store/store";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./routes/HomePage";
 import CartPage from "./routes/BillPage";
@@ -9,9 +8,12 @@ import ProductPage from "./routes/ProductPage";
 import NotFoundPage from "./routes/NotFoundPage";
 import CheckutSuccess from "./routes/checkoutSuccessPage";
 import LoginInPage from "./routes/LoginPage";
+import { useEffect } from "react";
+import { RELOAD_ERROR_MESSAGE } from "./store/auth.store/authSlice";
 
 function App() {
   const currentUser = useSelector((state) => state.entities.auth.currentUser);
+
   return (
     <>
       <Routes>

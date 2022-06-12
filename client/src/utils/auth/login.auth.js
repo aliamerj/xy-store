@@ -14,7 +14,7 @@ const loginHandler = async (user, dispatch) => {
     });
     dispatch(SUCCESS_LOGIN(res.data));
   } catch (error) {
-    dispatch(FAILURE_LOGIN());
+    dispatch(FAILURE_LOGIN(error.response.data));
   }
 };
 

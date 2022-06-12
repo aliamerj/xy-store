@@ -7,7 +7,7 @@ const authSlice = createSlice({
     currentUser: null,
     isFetching: false,
     error: false,
-    errorMessage: "",
+    errorMessage: undefined,
   },
   reducers: {
     START_LOGIN: (state, action) => {
@@ -26,10 +26,19 @@ const authSlice = createSlice({
       state.currentUser = null;
       storage.removeItem("root");
     },
+    RELOAD_ERROR_MESSAGE: (state) => {
+      state.errorMessage = undefined;
+      state.error = false;
+    },
   },
 });
 
-export const { SUCCESS_LOGIN, START_LOGIN, FAILURE_LOGIN, SIGN_OUT } =
-  authSlice.actions;
+export const {
+  SUCCESS_LOGIN,
+  START_LOGIN,
+  FAILURE_LOGIN,
+  SIGN_OUT,
+  RELOAD_ERROR_MESSAGE,
+} = authSlice.actions;
 
 export default authSlice.reducer;
