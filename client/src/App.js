@@ -9,12 +9,23 @@ import NotFoundPage from "./routes/NotFoundPage";
 import CheckutSuccess from "./routes/checkoutSuccessPage";
 import LoginInPage from "./routes/LoginPage";
 import { useEffect } from "react";
+import refreshToken from "./utils/auth/refreshToken.auth";
 
 function App() {
   const currentUser = useSelector((state) => state.entities.auth.currentUser);
+  const dispatch = useDispatch();
   useEffect(() => {
-    console.log(document.cookie.split("; "));
-  });
+    if (currentUser) {
+      const callRef = async () => {
+        try {
+          await refreshToken(currentUser, dispatch);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      callRef();
+    }
+  }, []);
 
   return (
     <>
@@ -27,22 +38,14 @@ function App() {
           <Route
             path="/register"
             element={
-              currentUser === "login successed" ? (
-                <Navigate to="/" replace />
-              ) : (
-                <RegisterPage />
-              )
+              currentUser ? <Navigate to="/" replace /> : <RegisterPage />
             }
           />
 
           <Route
             path="/login"
             element={
-              currentUser === "login successed" ? (
-                <Navigate to="/" replace />
-              ) : (
-                <LoginInPage />
-              )
+              currentUser ? <Navigate to="/" replace /> : <LoginInPage />
             }
           />
           <Route path="*" element={<NotFoundPage />} />

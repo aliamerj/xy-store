@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const ClIENT_URL = "http://localhost:3000";
 
 const app = express();
-app.use(cors({ origin: ClIENT_URL }));
+app.use(cors({ origin: ClIENT_URL, credentials: true }));
 app.use(cookieParser(process.env.COOKIE_KEY));
 
 require("./startup/config")();

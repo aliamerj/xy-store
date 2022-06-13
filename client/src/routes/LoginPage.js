@@ -29,12 +29,12 @@ const LoginInPage = () => {
                 <Logo />
               </TitleContaintertStyle>
               <FormTitleStyle>
-                <Typography variant="h6" marginBottom={2}>
+                <Typography component="span" variant="h6" marginBottom={2}>
                   Sign in to your account
                 </Typography>
               </FormTitleStyle>
               {errorMessage ? (
-                <Typography marginBottom={2}>
+                <Typography marginBottom={2} component="span">
                   <Alert severity="error">{errorMessage}</Alert>
                 </Typography>
               ) : null}

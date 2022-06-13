@@ -14,7 +14,7 @@ const Dashboard = () => {
     <>
       <DashboardStyle>
         <Cart cartState={{ showDrawer: [showDrawer, setShowDrawer] }} />
-        {currentUser === "login successed" ? <AccountUesr /> : <Account />}
+        {currentUser ? <AccountUesr /> : <Account />}
       </DashboardStyle>
       <CartDrawer cartState={{ showDrawer: [showDrawer, setShowDrawer] }} />
     </>

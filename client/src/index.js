@@ -7,6 +7,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { persistor } from "./store/persist/persistor.store";
 import store from "./store/store";
+import { CookiesProvider } from "react-cookie";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +15,9 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <App />
+          <CookiesProvider>
+            <App />
+          </CookiesProvider>
         </PersistGate>
       </Provider>
     </BrowserRouter>

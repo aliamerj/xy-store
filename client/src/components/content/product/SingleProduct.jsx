@@ -68,6 +68,7 @@ const SingleProduct = ({ product, isLoading }) => {
           <TitleStyle>{product.name}</TitleStyle>
           <DescriptionStyle>
             <Typography
+              component="p"
               dangerouslySetInnerHTML={{ __html: product.description }}
               variant="body2"
               color="text.secondary"

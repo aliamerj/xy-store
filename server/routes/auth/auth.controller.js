@@ -18,7 +18,8 @@ const register = async (req, res) => {
   let newUser = new User(userInfo);
   await hashPasswordsUtils(newUser);
   const accessToken = newUser.generateAuthToken();
-  newUser.refreshToken.push(newUser.generateRefreshToken());
+  const refToken = newUser.generateRefreshToken();
+  newUser.refreshToken.push(refToken);
   await newUser.save();
   return res
     .status(201)
@@ -26,9 +27,15 @@ const register = async (req, res) => {
       httpOnly: true,
       sameSite: "None",
       secure: true,
-      maxAge: 10 * 1000,
+      maxAge: 60 * 1000 * 10, // 10m
     })
-    .json("login successed");
+    .cookie("checkToken", true, {
+      httpOnly: false,
+      sameSite: "None",
+      secure: true,
+      maxAge: 60 * 1000 * 10,
+    })
+    .json({ email: newUser.email, refreshToken: refToken });
 };
 
 const login = async (req, res) => {
@@ -40,39 +47,71 @@ const login = async (req, res) => {
     );
     if (validPassword) {
       const accessToken = user.generateAuthToken();
-      user.refreshToken.push(user.generateRefreshToken());
-
+      const refToken = user.generateRefreshToken();
+      user.refreshToken.push(refToken);
       return res
         .status(200)
         .cookie("auth", accessToken, {
           httpOnly: true,
           sameSite: "None",
           secure: true,
-          maxAge: 10 * 1000,
+          maxAge: 60 * 1000 * 10,
         })
-        .json("login successed");
+        .cookie("checkToken", true, {
+          signed: true,
+          sameSite: "None",
+          maxAge: 60 * 1000 * 10,
+        })
+        .json({ email: user.email, refreshToken: refToken });
     }
   } catch (error) {
     return res.status(400).json("Incorrect Email or password .");
   }
 };
 
-const refrechToken = async (req, res) => {
+const refreshToken = async (req, res) => {
   const user = await User.findById(req.user._id);
-  user.generateAuthToken();
-  user.refreshToken.push(user.generateRefreshToken());
-  return res.sendStatus(200);
+  const accessToken = user.generateAuthToken();
+  const refToken = user.generateRefreshToken();
+  user.refreshToken.push(refToken);
+  return res
+    .status(200)
+    .cookie("auth", accessToken, {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+      maxAge: 60 * 1000 * 10,
+    })
+    .cookie("checkToken", true, {
+      sameSite: "None",
+      secure: true,
+      maxAge: 60 * 1000 * 10,
+    })
+    .json({ email: user.email, refreshToken: refToken });
 };
-const signout = (req, res) => {
-  User.findOneAndDelete({ refreshToken: req.body.refreshToken[0] })
-    .then(() => res.status(200).json("Sign Out successfully"))
-    .catch((error) => res.status(404).json(error.message));
-
-  return res.status(204).json("log out successfully");
+const signout = async (req, res) => {
+  await User.findByIdAndUpdate(req.user._id, {
+    refreshToken: [],
+  });
+  return res
+    .status(200)
+    .cookie("auth", "out", {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+      maxAge: 1000,
+    })
+    .cookie("checkToken", false, {
+      httpOnly: false,
+      sameSite: "None",
+      secure: true,
+      maxAge: 1000,
+    })
+    .json("Sign Out successfully");
 };
 module.exports = {
   login,
   register,
-  refrechToken,
+  refreshToken,
   signout,
 };
