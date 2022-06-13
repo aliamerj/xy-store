@@ -11,7 +11,7 @@ const auth = (req, res, next) => {
   });
 };
 const authRefreshToken = (req, res, next) => {
-  const refershToken = req.body.refreshToken[0];
+  const refershToken = req.body.refreshToken;
   if (!refershToken) return res.status(401).json("you are not authenticated!");
 
   jwt.verify(refershToken, process.env.JWT_REFRESH_KEY, (error, user) => {
