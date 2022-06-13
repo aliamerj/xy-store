@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 function FormInput({ name, label, required }) {
-  const auth = useSelector((state) => state.entities.auth.error);
+  const auth = useSelector((state) => state.entities.auth.errorMessage);
   let location = useLocation().pathname;
 
   const {
@@ -34,6 +34,7 @@ function FormInput({ name, label, required }) {
       />
       <FieldStyle>
         <Controller
+          defaultValue={""}
           name={name}
           control={control}
           render={({ field }) => (

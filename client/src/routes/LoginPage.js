@@ -17,8 +17,7 @@ const LoginInPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(RELOAD_ERROR_MESSAGE());
-  }, [window.location.href]);
-  const auth = useSelector((state) => state.entities.auth.error);
+  }, []);
   const errorMessage = useSelector((state) => state.entities.auth.errorMessage);
   return (
     <>
@@ -34,7 +33,7 @@ const LoginInPage = () => {
                   Sign in to your account
                 </Typography>
               </FormTitleStyle>
-              {auth && errorMessage ? (
+              {errorMessage ? (
                 <Typography marginBottom={2}>
                   <Alert severity="error">{errorMessage}</Alert>
                 </Typography>

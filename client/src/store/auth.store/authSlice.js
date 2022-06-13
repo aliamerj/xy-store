@@ -6,7 +6,6 @@ const authSlice = createSlice({
   initialState: {
     currentUser: null,
     isFetching: false,
-    error: false,
     errorMessage: undefined,
   },
   reducers: {
@@ -20,7 +19,6 @@ const authSlice = createSlice({
     FAILURE_LOGIN: (state, action) => {
       state.isFetching = false;
       state.errorMessage = action.payload;
-      state.error = true;
     },
     SIGN_OUT: (state, action) => {
       state.currentUser = null;
@@ -28,7 +26,6 @@ const authSlice = createSlice({
     },
     RELOAD_ERROR_MESSAGE: (state) => {
       state.errorMessage = undefined;
-      state.error = false;
     },
   },
 });

@@ -25,7 +25,7 @@ export const SocialContainerStyle = styled("div")(({ theme }) => ({
   display: "flex",
 }));
 
-export const SocialIconStyle = styled("div")(({ theme, colorItem }) => ({
+export const SocialIconStyle = styled("div")(({ theme, coloritem }) => ({
   width: "40px",
   height: "40px",
   borderRadius: "50%",
@@ -34,7 +34,7 @@ export const SocialIconStyle = styled("div")(({ theme, colorItem }) => ({
   alignItems: "center",
   justifyContent: "center",
   marginRight: "20px",
-  backgroundColor: colorItem,
+  backgroundColor: coloritem,
 }));
 
 export const CenterStyle = styled("div")(({ theme }) => ({

@@ -56,11 +56,11 @@ export const FilterTitleStyle = styled("span")(() => ({
   fontSize: "20px",
   fontWeight: "200",
 }));
-export const FilterColorStyle = styled("div")(({ colorItem }) => ({
+export const FilterColorStyle = styled("div")(({ coloritem }) => ({
   width: "20px",
   height: "20px",
   borderRadius: "50%",
-  backgroundColor: colorItem,
+  backgroundColor: coloritem,
   margin: "0px 5px",
   cursor: "pointer",
 }));

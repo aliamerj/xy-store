@@ -29,11 +29,11 @@ export const DetailsStyle = styled("div")(() => ({
 
 export const ProductNameStyle = styled("span")(() => ({}));
 export const ProductIdStyle = styled("span")(() => ({}));
-export const ProductColorStyle = styled("div")(({ theme, colorItem }) => ({
+export const ProductColorStyle = styled("div")(({ theme, coloritem }) => ({
   width: "20px",
   height: "20px",
   borderRadius: "50%",
-  backgroundColor: colorItem,
+  backgroundColor: coloritem,
 }));
 
 export const ProductSizeSizeStyle = styled("span")(() => ({}));

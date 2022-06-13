@@ -60,7 +60,7 @@ const ProductsBill = () => {
                 <ProductIdStyle>
                   <b>ID:</b> {product.id}
                 </ProductIdStyle>
-                <ProductColorStyle colorItem="black" />
+                <ProductColorStyle coloritem="black" />
                 <ProductSizeSizeStyle>
                   <b>Size:</b> 37.5
                 </ProductSizeSizeStyle>

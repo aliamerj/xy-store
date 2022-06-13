@@ -71,7 +71,6 @@ export default function CountryInput({ name, label, required }) {
               )}
               renderInput={(params) => (
                 <TextField
-                  defaultValue={countriesSupporting[1]}
                   {...params}
                   label="Choose a country"
                   inputProps={{

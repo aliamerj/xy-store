@@ -15,7 +15,6 @@ import {
 import { RELOAD_ERROR_MESSAGE } from "../store/auth.store/authSlice";
 import { useEffect } from "react";
 const RegisterPage = () => {
-  const auth = useSelector((state) => state.entities.auth.error);
   const errorMessage = useSelector((state) => state.entities.auth.errorMessage);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,7 +32,7 @@ const RegisterPage = () => {
               <FormTitleStyle>
                 <Typography variant="h6">REGISTER</Typography>
               </FormTitleStyle>
-              {auth && errorMessage ? (
+              {errorMessage ? (
                 <Typography marginBottom={2} component={"div"}>
                   <Alert severity="error">{errorMessage}</Alert>
                 </Typography>

@@ -33,16 +33,16 @@ const Footer = () => {
           the majority have suffered alteration in some form, by injected humour
         </DescriptionStyle>
         <SocialContainerStyle>
-          <SocialIconStyle colorItem="#3B5999">
+          <SocialIconStyle coloritem="#3B5999">
             <Facebook />
           </SocialIconStyle>
-          <SocialIconStyle colorItem="#E4405F">
+          <SocialIconStyle coloritem="#E4405F">
             <Instagram />
           </SocialIconStyle>
-          <SocialIconStyle colorItem="#55ACEE">
+          <SocialIconStyle coloritem="#55ACEE">
             <Twitter />
           </SocialIconStyle>
-          <SocialIconStyle colorItem="#E60023">
+          <SocialIconStyle coloritem="#E60023">
             <Pinterest />
           </SocialIconStyle>
         </SocialContainerStyle>
