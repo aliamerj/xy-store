@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const accessToHisOwnData = (req, res, next) => {
-  const token = req.header("x-auth-token");
+  const token = req.cookies.auth;
   const { _id, isAdmin } = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 
   if (_id === req.params.id || isAdmin) {

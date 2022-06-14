@@ -21,7 +21,7 @@ afterEach(async () => {
   server.close();
 });
 
-describe("/api/order", () => {
+describe("/order", () => {
   describe("GET/ getAllOrder /", () => {
     it("should return all orders", async () => {
       await Order.collection.insertMany([
@@ -35,7 +35,7 @@ describe("/api/order", () => {
         },
       ]);
 
-      const res = await request(server).get("/api/order");
+      const res = await request(server).get("/order");
       expect(res.status).toBe(200);
       expect(res.body.length).toBe(2);
       expect(
@@ -53,7 +53,7 @@ describe("/api/order", () => {
 
     it("should retutn 404 if there is problem loading order or there is no order", async () => {
       const res = await request(server)
-        .get("/api/order")
+        .get("/order")
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(404);
@@ -66,26 +66,23 @@ describe("/api/order", () => {
       const order = new Order(orderTest);
       await order.save();
       const res = await request(server)
-        .get("/api/order/" + order._id)
+        .get("/order/" + order._id)
         .expect(200);
       expect(res.body).toHaveProperty("userId", order.userId);
     });
     it("should throw an error if id was invlid (404) ", async () => {
-      await request(server).get("/api/order/1").expect(404);
+      await request(server).get("/order/1").expect(404);
     });
   });
   describe("POST/ createOrder", () => {
     it("should add new order with 201 created", async () => {
-      await request(server).post("/api/order").send(orderTest).expect(201);
+      await request(server).post("/order").send(orderTest).expect(201);
     });
     it("should throw an error with 400 when there is a data missing or invalid", async () => {
-      await request(server)
-        .post("/api/order")
-        .send({ title: "test" })
-        .expect(400);
+      await request(server).post("/order").send({ title: "test" }).expect(400);
 
       await request(server)
-        .post("/api/order")
+        .post("/order")
         .send({
           products: [{ test1: "test1" }, { test2: "test2" }],
           amount: 1,
@@ -99,7 +96,7 @@ describe("/api/order", () => {
       const order = new Order(orderTest);
       await order.save();
       const res = await request(server)
-        .put("/api/order/" + order._id)
+        .put("/order/" + order._id)
         .send({
           userId: "changed changed",
           products: [{ test1: "test1" }, { test2: "test2" }],
@@ -115,7 +112,7 @@ describe("/api/order", () => {
     });
     it("should return 404 when id is invalid", async () => {
       const res = await request(server)
-        .put("/api/order/1")
+        .put("/order/1")
         .send({
           userId: "changed changed",
           products: [{ test1: "test1" }, { test2: "test2" }],
@@ -129,7 +126,7 @@ describe("/api/order", () => {
       const order = new Order(orderTest);
       await order.save();
       const res = await request(server)
-        .put("/api/order/" + order._id)
+        .put("/order/" + order._id)
         .send({
           amount: 1,
           address: { test1: "test1" },
@@ -143,14 +140,14 @@ describe("/api/order", () => {
       const order = new Order(orderTest);
       await order.save();
       await request(server)
-        .delete("/api/order/" + order._id)
+        .delete("/order/" + order._id)
         .expect(200)
         .then((e) => {
           expect(e.body).toBe("Order has been deleted...");
         });
     });
     it("should return 404 if id was invalid ", async () => {
-      const res = await request(server).delete("/api/order/1").expect(404);
+      await request(server).delete("/order/1").expect(404);
     });
   });
   describe("GET/ getUserOrder ", () => {
@@ -158,7 +155,7 @@ describe("/api/order", () => {
       const order = new Order(orderTest);
       await order.save();
       const res = await request(server)
-        .get("/api/order/find/" + order.userId)
+        .get("/order/find/" + order.userId)
         .expect(200);
       expect(res.body).toHaveProperty("address");
       expect(res.body).toHaveProperty("products");
@@ -166,7 +163,7 @@ describe("/api/order", () => {
       expect(res.body).toHaveProperty("userId");
     });
     it("should throw an error if userId was invlid (404) ", async () => {
-      await request(server).get("/api/order/find/1").expect(404);
+      await request(server).get("/order/find/1").expect(404);
     });
   });
 });

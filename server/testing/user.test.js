@@ -6,9 +6,15 @@ jest.setTimeout(10000);
 beforeEach(() => {
   server = require("../index");
   newRegistering = {
-    username: "usernameTestrequired",
+    firstName: "alialialai",
+    lastName: "ameramaer",
     email: "test@required.com",
     password: "passwordTest@req",
+    country: "Iraq",
+    city: "baghdad",
+    address1: "dsafa",
+    address2: "dafds",
+    zip: 12343,
   };
 });
 
@@ -26,11 +32,10 @@ describe("/api/user", () => {
       await user.save();
 
       const res = await request(server)
-        .get("/api/user/" + user._id)
-        .set("x-auth-token", token)
+        .get("/user/" + user._id)
+        .set("Cookie", [`auth=${token};`])
         .expect(200);
-      expect(res.body).toHaveProperty("username", user.username);
-      expect(res.body).toHaveProperty("email", user.email);
+      expect(res.body).toHaveProperty("email", newRegistering.email);
     });
     it("should return 404 for an invalid given id", async () => {
       const user = new User(newRegistering);
@@ -39,8 +44,8 @@ describe("/api/user", () => {
 
       await user.save();
       await request(server)
-        .get("/api/user/1")
-        .set("x-auth-token", token)
+        .get("/user/1")
+        .set("Cookie", [`auth=${token};`])
         .expect(404);
     });
   });
@@ -50,19 +55,14 @@ describe("/api/user", () => {
       const token = user.generateAuthToken();
 
       await user.save();
+      newRegistering.email = "changed@required.com";
       await request(server)
-        .put("/api/user/" + user._id)
-        .set("x-auth-token", token)
-        .send({
-          username: "changedChanged",
-          email: "changed@required.com",
-          password: "passwordTe",
-        })
+        .put("/user/" + user._id)
+        .set("Cookie", [`auth=${token};`])
+        .send(newRegistering)
         .expect(200);
 
-      const { username, email } = await User.findById(user._id);
-
-      expect(username).toBe("changedChanged");
+      const { email } = await User.findById(user._id);
       expect(email).toBe("changed@required.com");
     });
     it("should retutn 404 if the id was invalid ", async () => {
@@ -71,30 +71,23 @@ describe("/api/user", () => {
       const token = user.generateAuthToken();
 
       await user.save();
+      newRegistering.email = "changed@required.com";
       await request(server)
-        .put("/api/user/1")
-        .send({
-          username: "changedChanged",
-          email: "changed@required.com",
-          password: "passwordTe",
-        })
-        .set("x-auth-token", token)
+        .put("/user/1")
+        .send(newRegistering)
+        .set("Cookie", [`auth=${token};`])
         .expect(404);
     });
-    it("should retutn 500 if the server failed hashing new password ", async () => {});
     it("should retutn 400 if the update info with invalid  ", async () => {
       const user = new User(newRegistering);
       const token = user.generateAuthToken();
 
       await user.save();
+      newRegistering.email = "c";
       await request(server)
-        .put("/api/user/" + user._id)
-        .set("x-auth-token", token)
-        .send({
-          username: "c",
-          email: "changed@required.com",
-          password: "123",
-        })
+        .put("/user/" + user._id)
+        .set("Cookie", [`auth=${token};`])
+        .send(newRegistering)
         .expect(400);
     });
   });

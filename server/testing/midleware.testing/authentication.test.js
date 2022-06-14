@@ -7,9 +7,15 @@ jest.setTimeout(10000);
 beforeEach(() => {
   server = require("../../index");
   userInfo = {
-    username: "usernameTestrequired",
+    firstName: "alialialai",
+    lastName: "ameramaer",
     email: "test@required.com",
     password: "passwordTest@req",
+    country: "Iraq",
+    city: "baghdad",
+    address1: "dsafa",
+    address2: "dafds",
+    zip: 12343,
   };
 });
 afterEach(async () => {
@@ -26,8 +32,8 @@ describe("auth :: with User route", () => {
       await user.save();
 
       const res = await request(server)
-        .get("/api/user/" + user._id)
-        .set("x-auth-token", token)
+        .get("/user/" + user._id)
+        .set("Cookie", [`auth=${token};`])
         .expect(200);
     });
     it("should return 401 not pass if user not logged in", async () => {
@@ -36,9 +42,9 @@ describe("auth :: with User route", () => {
       await user.save();
 
       const res = await request(server)
-        .get("/api/user/" + user._id)
+        .get("/user/" + user._id)
         .expect(401);
-      expect(res.body).toBe("you are not authenticated!");
+      expect(res.body).toBe("you are not authenticated!!");
     });
     it("should return 403 not pass if token is invalid ", async () => {
       const user = new User(userInfo);
@@ -46,8 +52,8 @@ describe("auth :: with User route", () => {
       await user.save();
 
       const res = await request(server)
-        .get("/api/user/" + user._id)
-        .set("x-auth-token", "1")
+        .get("/user/" + user._id)
+        .set("Cookie", [`auth=invalid Token;`])
         .expect(403);
       expect(res.body).toBe("invalid token");
     });

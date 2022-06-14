@@ -21,7 +21,7 @@ afterEach(async () => {
   server.close();
 });
 
-describe("/api/product", () => {
+describe("/product", () => {
   describe("GET/ getAllProduct /", () => {
     it("should return all products", async () => {
       await Product.collection.insertMany([
@@ -37,7 +37,7 @@ describe("/api/product", () => {
         },
       ]);
 
-      const res = await request(server).get("/api/product");
+      const res = await request(server).get("/product");
 
       expect(res.status).toBe(200);
       expect(res.body.length).toBe(2);
@@ -58,11 +58,10 @@ describe("/api/product", () => {
 
     it("should return 404 if there is no product", async () => {
       const res = await request(server)
-        .get("/api/product")
+        .get("/product")
         .set("Accept", "application/json")
-        .expect("Content-Type", /json/)
         .expect(404);
-      expect(res.body).toBe("there is no product ");
+      expect(res.body).toStrictEqual("there is no product ");
     });
   });
   describe("GET/ getProduct ", () => {
@@ -70,21 +69,21 @@ describe("/api/product", () => {
       const product = new Product(productTest);
       await product.save();
       const res = await request(server)
-        .get("/api/product/" + product._id)
+        .get("/product/" + product._id)
         .expect(200);
       expect(res.body).toHaveProperty("title", product.title);
     });
     it("should throw an error if id was invlid (404) ", async () => {
-      await request(server).get("/api/product/1").expect(404);
+      await request(server).get("/product/1").expect(404);
     });
   });
   describe("POST/ createProduct", () => {
     it("should add new product with 201 created", async () => {
-      await request(server).post("/api/product").send(productTest).expect(201);
+      await request(server).post("/product").send(productTest).expect(201);
     });
     it("should throw an error with 400 when there is a data missing", async () => {
       await request(server)
-        .post("/api/product")
+        .post("/product")
         .send({ title: "test" })
         .expect(400);
     });
@@ -95,7 +94,7 @@ describe("/api/product", () => {
       const product = new Product(productTest);
       await product.save();
       const res = await request(server)
-        .put("/api/product/" + product._id)
+        .put("/product/" + product._id)
         .send({
           title: "changed changed changed",
           description: "it is now changed  test",
@@ -112,8 +111,8 @@ describe("/api/product", () => {
       expect(productTitle.title).toBe("changed changed changed");
     });
     it("should return 404 when id is invalid", async () => {
-      const res = await request(server)
-        .put("/api/product/1")
+      await request(server)
+        .put("/product/1")
         .send({
           title: "changed changed changed",
           description: "it is now changed  test",
@@ -129,7 +128,7 @@ describe("/api/product", () => {
       const product = new Product(productTest);
       await product.save();
       await request(server)
-        .put("/api/product/" + product._id)
+        .put("/product/" + product._id)
         .send({
           title: "changed changed changed",
           description: 1,
@@ -145,14 +144,14 @@ describe("/api/product", () => {
       const product = new Product(productTest);
       await product.save();
       await request(server)
-        .delete("/api/product/" + product._id)
+        .delete("/product/" + product._id)
         .expect(200)
         .then((e) => {
           expect(e.body).toBe("product has been deleted...");
         });
     });
     it("should return 404 if id was invalid ", async () => {
-      const res = await request(server).delete("/api/product/1").expect(404);
+      await request(server).delete("/product/1").expect(404);
     });
   });
 });

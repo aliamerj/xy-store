@@ -17,7 +17,7 @@ afterEach(async () => {
   server.close();
 });
 
-describe("/api/cart", () => {
+describe("/cart", () => {
   describe("GET/ getAllcart /", () => {
     it("should return all carts", async () => {
       await Cart.collection.insertMany([
@@ -28,7 +28,7 @@ describe("/api/cart", () => {
         },
       ]);
 
-      const res = await request(server).get("/api/cart");
+      const res = await request(server).get("/cart");
       expect(res.status).toBe(200);
       expect(res.body.length).toBe(2);
       expect(
@@ -40,22 +40,18 @@ describe("/api/cart", () => {
 
     it("should throw an error if server unable to load carts or cart was empty", async () => {
       const res = await request(server)
-        .get("/api/cart")
+        .get("/cart")
         .set("Accept", "application/json")
-        .expect("Content-Type", /json/)
         .expect(404);
-      expect(res.body).toBe("the cart is empty");
+      expect(res.body).toStrictEqual("the cart is empty");
     });
   });
   describe("POST/ createCart", () => {
     it("should add new cart with 201 created", async () => {
-      await request(server).post("/api/cart").send(cartTest).expect(201);
+      await request(server).post("/cart").send(cartTest).expect(201);
     });
     it("should throw an error with 400 when there is any invalid", async () => {
-      await request(server).post("/api/cart").send({ userId: 1 }).expect(400);
-    });
-    it.skip("should throw an error with 500 if server failed save the new card", async () => {
-      await request(server).post("/api/cart").send(cartTest).expect(500);
+      await request(server).post("/cart").send({ userId: 1 }).expect(400);
     });
   });
   describe("PUT/ updatecart", () => {
@@ -63,7 +59,7 @@ describe("/api/cart", () => {
       const cart = new Cart(cartTest);
       await cart.save();
       await request(server)
-        .put("/api/cart/" + cart._id)
+        .put("/cart/" + cart._id)
         .send({
           userId: "changed changed",
           products: [{ product: "product1" }, { product: "product2" }],
@@ -76,7 +72,7 @@ describe("/api/cart", () => {
     });
     it("should return 404 when id is invalid", async () => {
       await request(server)
-        .put("/api/cart/1")
+        .put("/cart/1")
         .send({
           userId: "changed changed",
           products: [{ product: "product1" }, { product: "product2" }],
@@ -85,7 +81,7 @@ describe("/api/cart", () => {
     });
     it("should return 400 if new info was invalid", async () => {
       await request(server)
-        .put("/api/cart/1")
+        .put("/cart/1")
         .send({
           userId: 1,
           products: [{ product: "product1" }, { product: "product2" }],
@@ -98,14 +94,14 @@ describe("/api/cart", () => {
       const cart = new Cart(cartTest);
       await cart.save();
       await request(server)
-        .delete("/api/cart/" + cart._id)
+        .delete("/cart/" + cart._id)
         .expect(200)
         .then((e) => {
           expect(e.body).toBe("cart has been deleted...");
         });
     });
     it("should return 404 if id was invalid ", async () => {
-      await request(server).delete("/api/cart/1").expect(404);
+      await request(server).delete("/cart/1").expect(404);
     });
   });
   describe("GET/ getUserCart ", () => {
@@ -113,13 +109,13 @@ describe("/api/cart", () => {
       const cart = new Cart(cartTest);
       await cart.save();
       const res = await request(server)
-        .get("/api/cart/find/" + cart.userId)
+        .get("/cart/find/" + cart.userId)
         .expect(200);
       expect(res.body).toHaveProperty("products");
       expect(res.body).toHaveProperty("userId");
     });
     it("should throw an error if id was invalid (404) ", async () => {
-      await request(server).get("/api/cart/find/1").then(404);
+      await request(server).get("/cart/find/1").then(404);
     });
   });
 });

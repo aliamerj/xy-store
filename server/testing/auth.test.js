@@ -9,9 +9,15 @@ jest.setTimeout(100000);
 beforeEach(() => {
   server = require("../index");
   newRegistering = {
-    username: "usernameTestrequired",
+    firstName: "alialialai",
+    lastName: "ameramaer",
     email: "test@required.com",
     password: "passwordTest@req",
+    country: "Iraq",
+    city: "baghdad",
+    address1: "dsafa",
+    address2: "dafds",
+    zip: 12343,
   };
 });
 
@@ -20,72 +26,62 @@ afterEach(async () => {
   jest.restoreAllMocks();
   server.close();
 });
-describe("/api/register", () => {
+describe("/register", () => {
   it("should return 201 pass if user enter all info properly", async () => {
-    const res = await request(server)
-      .post("/api/register")
-      .send(newRegistering)
-      .expect(201);
-    expect(res.body).toBe("successfully registered");
+    await request(server).post("/register").send(newRegistering).expect(201);
   });
   it("should return 400  if there is missing info or invalid", async () => {
-    newRegistering.username = null;
-    await request(server)
-      .post("/api/register")
-      .send(newRegistering)
-      .expect(400);
+    newRegistering.email = null;
+    await request(server).post("/register").send(newRegistering).expect(400);
   });
-  it.skip("should return 500 if the server failed hashing password", async () => {
-    newRegistering.password = null;
-    await request(server)
-      .post("/api/register")
-      .send(newRegistering)
-      .expect(500);
-  });
-  it.skip("should return 500 if the server failed generate Token", async () => {});
 });
 describe("/api/login", () => {
   it("should return 200 pass if user enter correct email and password", async () => {
-    await request(server).post("/api/register").send(newRegistering);
+    await request(server).post("/register").send(newRegistering).expect(201);
 
-    const res = await request(server)
-      .post("/api/login")
-      .send({ email: newRegistering.email, password: newRegistering.password });
-
-    expect(res.body).toBe("login successed");
+    await request(server)
+      .post("/login")
+      .send({
+        email: newRegistering.email,
+        password: newRegistering.password,
+      })
+      .expect(200);
   });
   it("should return 400  if user enter invalid email and password", async () => {
     await request(server)
-      .post("/api/login")
-      .send({ email: "1", password: null });
+      .post("/login")
+      .send({ email: "1", password: null })
+      .expect(400);
   });
   it("should return 400  if user enter invalid email ", async () => {
     await request(server)
-      .post("/api/login")
+      .post("/login")
       .send({ email: "1", password: "testtest" })
       .expect(400);
   });
   it("should return 400  if user enter invalid password ", async () => {
-    const res = await request(server)
-      .post("/api/login")
+    await request(server)
+      .post("/login")
       .send({ email: newRegistering.email, password: null })
       .expect(400);
   });
   it("should return 400  if user enter Email not existing ", async () => {
     const res = await request(server)
-      .post("/api/login")
+      .post("/login")
       .send({ email: newRegistering.email, password: "testtesttest" })
       .expect(400);
 
-    expect(res.body).toBe("Email or password was incorrect.");
+    expect(res.body).toBe("Incorrect Email or password .");
   });
-  it("should return 400  if user enter incorrect password ", async () => {
-    await request(server).post("/api/register").send(newRegistering);
+  // take a lot of time
+  it.skip("should return 400  if user enter incorrect password ", async () => {
+    const user = new User(newRegistering);
+    await user.save();
     const res = await request(server)
-      .post("/api/login")
+      .post("/login")
       .send({ email: newRegistering.email, password: "incorrect" })
       .expect(400);
 
-    expect(res.body).toBe("Email or password was incorrect.");
+    expect(res.body).toBe("Incorrect Email or password .");
   });
 });

@@ -9,11 +9,12 @@ const patch = require("path");
 
 module.exports = function (app, express) {
   app.use(express.json());
-  app.use(express.static(patch.join(__dirname, "..", "public")));
 
-  app.get("/*", (req, res) => {
-    res.sendFile(patch.join(__dirname, "..", "public", "index.html"));
-  });
+  // app.use(express.static(patch.join(__dirname, "..", "public")));
+
+  // app.get("/*", (req, res) => {
+  //   res.sendFile(patch.join(__dirname, "..", "public", "index.html"));
+  // });
   app.use("/", authRoute);
   app.use("/user", userRoute);
   app.use("/product", productRoute);
