@@ -17,4 +17,5 @@ _ complete online store
              4) JWT & Cookies
              5) stripe
              
-=========================================================           
+=========================================================       
+I made client and server work on one host 
