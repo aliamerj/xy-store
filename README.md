@@ -1,9 +1,9 @@
 # xy-store
 
 _ complete online store 
-# 1- user can create an account 
-# 2- user can login 
-# 3- everyone can pay anything in store 
+1- user can create an account 
+2- user can login 
+3- everyone can pay anything in store 
 
 
 ### the tech used:
