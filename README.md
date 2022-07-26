@@ -18,3 +18,6 @@ _ complete online store
              5) stripe
              
 =========================================================       
+![xy-store-img](https://i.ibb.co/FsD9NWn/2.png)
+
+
